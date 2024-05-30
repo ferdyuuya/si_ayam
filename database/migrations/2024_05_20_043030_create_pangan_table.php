@@ -15,11 +15,10 @@ class CreatePanganTable extends Migration
     {
         Schema::create('pangan', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
             $table->integer('pengeluaran_harian')->default(0);
             $table->integer('stok_sekarang')->default(0);
             $table->integer('pemasukan_bulanan')->default(0);
-            $table->integer('update_pangan')->default(0);
+            $table->date('update_pangan');
             $table->string('updated_by');
             $table->timestamps();
         });
