@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('laporan', function (Blueprint $table) {
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_ternak')->references('id')->on('ternak')->onDelete('cascade');
-            $table->foreign('id_pangan')->references('id')->on('pangan')->onDelete('cascade');
+            $table->foreignId('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_ternak')->references('id')->on('ternak')->onDelete('cascade');
+            $table->foreignId('id_pangan')->references('id')->on('pangan')->onDelete('cascade');
         });
     }
 
