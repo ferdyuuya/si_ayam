@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::get('/', function () {
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Auth::routes();
 
