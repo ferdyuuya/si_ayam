@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('laporan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('id_ternak');
-            $table->unsignedInteger('id_pangan');
-            $table->unsignedInteger('id_user');
+            $table->unsignedBigInteger('id_ternak');
+            $table->unsignedBigInteger('id_pangan');
+            $table->unsignedBigInteger('id_user');
             $table->integer('ayam_mati')->default(0);
             $table->integer('ayam_hidup')->default(0);
             $table->integer('ayam_sakit');
