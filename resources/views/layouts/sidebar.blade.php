@@ -36,28 +36,60 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-            <a href="pages/pangan.html" class="nav-link">
+        <li class="nav-item {{ request()->is('pangan') ? 'menu-open' : '' }}">
+          <a href="{{ route('pangan') }}" class="nav-link {{ request()->is('pangan') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
-              {{-- <i class="nav-icon fas fa-house"></i> --}}
               <p>
-                Pangan
-                {{-- <span class="right badge badge-danger">New</span> --}}
+                  Pangan
+                  <i class="right fas fa-angle-left"></i>
               </p>
+          </a>
+{{-- Dropdown Menu Pangan --}}
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('pangan') }}" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Laporan Pangan</p>
+              </a>
+            </li>
+          </ul>    
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('input_pangan') }}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Input Pangan</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item {{ request()->is('ternak') ? 'menu-open' : '' }}">
+            <a href="{{ route('ternak') }}" class="nav-link {{ request()->is('ternak') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Ternak
+                    <i class="right fas fa-angle-left"></i>
+                </p>
             </a>
+            {{-- Dropdown Menu Ternak --}}
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('ternak') }}" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Laporan Ternak</p>
+              </a>
+            </li>
+          </ul>       
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('input_ternak') }}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Input Ternak</p>
+                </a>
+              </li>
+            </ul>
           </li>
         <li class="nav-item">
-            <a href="pages/ternak.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              {{-- <i class="nav-icon fas fa-house"></i> --}}
-              <p>
-                Ternak
-                {{-- <span class="right badge badge-danger">New</span> --}}
-              </p>
-            </a>
-          </li>
-        <li class="nav-item">
-            <a href="pages/profile.html" class="nav-link">
+            <a href="{{ route('profile') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               {{-- <i class="nav-icon fas fa-house"></i> --}}
               <p>
