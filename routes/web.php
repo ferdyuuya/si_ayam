@@ -1,18 +1,20 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login', [LoginController::class, 'postLogin'])->name('login.store');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
 
 
 Route::get('/pangan', function () {
@@ -35,11 +37,6 @@ Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
 
-Route::get('/login', function () {
-    return view('login');
-});
 
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
