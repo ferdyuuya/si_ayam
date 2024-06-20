@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Pengurus',
-            'email' => 'pengurus',
+            'email' => 'pengurus@email.com',
             'password' => Hash::make('1234'),
-            'status' => false
+            'status' => true
         ]);
     }
 }

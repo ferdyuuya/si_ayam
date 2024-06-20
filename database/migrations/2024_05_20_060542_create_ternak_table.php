@@ -20,6 +20,7 @@ class CreateTernakTable extends Migration
             $table->integer('ayam_berhasil')->default(0);
             $table->integer('total_ayam')->default(0);
             $table->integer('total_awal_ayam')->default(0);
+            $table->boolean('is_ongoing')->default(true); //Set phase ternak is_ongoing = true means the phase is still ongoing
             $table->timestamps();
         });
     }
