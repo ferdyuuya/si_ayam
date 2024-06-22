@@ -7,14 +7,19 @@ use Illuminate\Http\Request;
 
 class TernakController extends Controller
 {
-    public function index()
+    public function index() //for view ternak
     {
         return view('ternak.index', [
             'ternak' => Ternak::all(),
         ]);
     }
 
-    public function store(){
+    public function add() //for view add ternak
+    {
+        return view('ternak.add');
+    }
+
+    public function store(Request $request){
         $ternak = new Ternak;
         $ternak->ayam_mati = 0;
         $ternak->ayam_sakit = 0;
@@ -26,9 +31,9 @@ class TernakController extends Controller
         return redirect('/ternak');
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
         
-        $ternak = Ternak::find(1);
+        $ternak = Ternak::find($id);
 
         if ($ternak->is_ongoing === true) {
             $ternak->ayam_mati = $request->input('ayam_mati');
@@ -38,6 +43,6 @@ class TernakController extends Controller
             $ternak->total_awal_ayam = $request->input('total_awal_ayam');
             $ternak->is_ongoing = false; //Phase Ternak is done
             $ternak->save();
-    }
+        }
     }
 }
