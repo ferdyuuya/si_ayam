@@ -15,5 +15,6 @@ class Ternak extends Model
         'ayam_berhasil',
         'total_ayam',
         'total_awal_ayam',
+        'is_ongoing',
     ];
 }

@@ -3,7 +3,7 @@
 @section('title', 'Pangan')
 
 @section('content_header')
-    <h1>Pangan</h1>
+    <h1>Input Pangan</h1>
 @stop
 
 @section('content')
@@ -13,12 +13,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Pangan</h1>
+            <h1 class="m-0">Input Pangan</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Pangan</li>
+              <li class="breadcrumb-item active">Input Pangan</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -77,61 +77,23 @@
           <div>
   <!-- Tambahkan Pangan button -->
           <div class="view-button">
-          <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;" >Tambahkan Pangan</button>
+          <a href="#" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</a>
           </div>
 
-          <div class="view-button">
-            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;" >Export ke PDF dan Excel</button>
+          <div class="export-button">
+            <a href="#" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: rgb(19, 84, 4); color: white;">Export ke PDF dan Excel</a>
             </div>
           </div>
         </div>
       </div>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Tambahkan Pangan</h2>
-      <form>
-          <label for="jumlahPangan">Jumlah pangan</label>
-          <input type="text" id="jumlahPangan" name="jumlahPangan" placeholder="60kg">
-          <button type="submit">Tambahkan Pangan</button>
-      </form>
-  </div>
-</div>
-
-      <div class="card">
-        {{-- <div class="card-header">
-          <h3 class="card-title">DataTable with default features</h3>
-        </div> --}}
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>No</th>
-              <th>Tanggal</th>
-              <th>Update Pangan</th>
-              <th>Stok Pangan Sekarang</th>
-              <th>Diubah Oleh</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Trident</td>
-              <td>Internet
-                Explorer 4.0
-              </td>
-              <td>Win 95+</td>
-              <td> 4</td>
-              <td>X</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
+      <div class="container">
+        <form action="#" method="post">
+            <label for="jumlahPangan">Jumlah pangan</label>
+            <input type="text" id="jumlahPangan" name="jumlahPangan" value="60kg">
+            <button type="submit" class="btn-submit">Tambahkan Pangan</button>
+        </form>
+    </div>
     </section>
 </div>
 
