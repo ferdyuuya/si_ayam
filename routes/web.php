@@ -26,12 +26,9 @@ Route::get('/input_pangan', [PanganController::class, 'add_index'])->name('input
 Route::get('/ternak', [TernakController::class, 'index'])->name('ternak');
 Route::get('/input_ternak', [TernakController::class, 'add'])->name('ternak.add');
 Route::post('/input_ternak', [TernakController::class, 'store'])->name('ternak.store');
+Route::put('/ternak/end/{id}', [TernakController::class, 'update'])->name('ternak.update');
 
 
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
-
-
-
-
