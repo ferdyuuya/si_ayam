@@ -42,7 +42,7 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-                <h3>{{ date('Y-m-d') }}</h3>
+              <h3>{{ date('Y-m-d') }}</h3>
               <p>Tanggal Ternak Mulai</p>
             </div>
             <div class="icon">
@@ -64,14 +64,25 @@
           </div>
         </div>
         <div>
-          <form action="{{ route('ternak.store') }}" method="POST">
-              @csrf
-              <button type="submit" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">
-                  Mulai Ternak
-              </button>
-          </form>
+          <div class="view-button">
+            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</button>
+          </div>
           <div class="view-button">
             <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
+          </div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Tambahkan Pangan</h2>
+            <form action="{{ route('ternak.store') }}" method="POST">
+              @csrf
+              <label for="totalAwalAyam">Jumlah pangan</label>
+              <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
+              <button type="submit">Tambahkan Pangan</button>
+            </form>
           </div>
         </div>
       </div>
@@ -83,20 +94,26 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>Tanggal</th>
-              <th>Update Pangan</th>
-              <th>Stok Pangan Sekarang</th>
-              <th>Diubah Oleh</th>
+              <th>Ayam Mati</th>
+              <th>Ayam Hidup</th>
+              <th>Ayam Berhasil</th>
+              <th>Total Ayam</th>
+              <th>Total Awal Ayam</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
+            @foreach ($ternak as $kolom_ternak)
             <tr>
-              <td>Trident</td>
-              <td>Internet Explorer 4.0</td>
-              <td>Win 95+</td>
-              <td>4</td>
-              <td>X</td>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $kolom_ternak->ayam_mati }}</td>
+              <td>{{ $kolom_ternak->ayam_sakit }}</td>
+              <td>{{ $kolom_ternak->ayam_berhasil }}</td>
+              <td>{{ $kolom_ternak->total_ayam }}</td>
+              <td>{{ $kolom_ternak->total_awal_ayam }}</td>
+              <td>{{ $kolom_ternak->is_ongoing }}</td>
             </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
