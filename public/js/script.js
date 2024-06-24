@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var endTernakModal = document.getElementById("endTernakModal");
     var startTernakBtn = document.getElementById("startTernak");
     var endTernakBtn = document.getElementById("endTernak");
+
+    var tambahPanganModal = document.getElementById("tambahPanganModal");
+    var kurangPanganModal = document.getElementById("kurangPanganModal");
+    var tambahPanganBtn = document.getElementById("tambahPanganBtn");
+    var kurangPanganBtn = document.getElementById("kurangPanganBtn");
+
     var spans = document.getElementsByClassName("close");
 
     // Function to open a modal
@@ -27,6 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
     if (endTernakBtn) {
         endTernakBtn.onclick = function () {
             openModal(endTernakModal); // Open the endTernakModal
+            console.log("Closed");
+        };
+    }
+
+    if (tambahPanganBtn) {
+        tambahPanganBtn.onclick = function () {
+            openModal(tambahPanganModal);
+            console.log("Opened");
+        };
+    }
+
+    // Fixed event listener for the endTernak button
+    if (kurangPanganBtn) {
+        kurangPanganBtn.onclick = function () {
+            openModal(kurangPanganModal); // Open the endTernakModal
             console.log("Closed");
         };
     }

@@ -40,7 +40,7 @@
         </ul>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{ route('input_pangan') }}" class="nav-link active">
+            <a href="{{ route('pangan.add') }}" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
               <p>Input Pangan</p>
             </a>

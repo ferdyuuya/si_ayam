@@ -10,9 +10,9 @@ class Pangan extends Model
     use HasFactory;
     protected $table = 'pangan';
     protected $fillable = [
-        'pengeluaran_harian',
+        'pengeluaran_stok',
         'stok_sekarang',
-        'pemasukan_bulanan',
+        'pemasukan_stok',
         'update_pangan',
         'updated_by'
     ];

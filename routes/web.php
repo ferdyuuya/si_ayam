@@ -19,7 +19,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Pangan
 Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
-Route::get('/input_pangan', [PanganController::class, 'add_index'])->name('input_pangan');
+Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
+Route::post('/input_pangan', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addPangan');
 
 
 //Ternak
