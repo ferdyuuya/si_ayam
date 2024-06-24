@@ -54,7 +54,7 @@ class TernakController extends Controller
             $ternak->total_ayam = $ternak->ayam_mati + $ternak->ayam_sakit + $ternak->ayam_berhasil;
 
             // Calculate total_awal_ayam
-            $ternak->total_awal_ayam = $ternak->total_awal_ayam - $ternak->total_ayam;
+            // $ternak->total_awal_ayam = $ternak->total_awal_ayam - $ternak->total_ayam;
 
             $ternak->is_ongoing = false;
 

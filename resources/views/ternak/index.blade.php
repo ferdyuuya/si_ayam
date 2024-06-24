@@ -29,20 +29,33 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>150</h3>
-              <p>Hari</p>
+              @php
+                  $latestOngoingTernak = $ternak->where('is_ongoing', 1)->sortByDesc('created_at')->first();
+              @endphp
+              @if ($latestOngoingTernak)
+                  <h3 id="elapsedTime">
+        {{ \Carbon\CarbonInterval::seconds(\Carbon\Carbon::parse($latestOngoingTernak->created_at)->diffInSeconds())->cascade()->forHumans() }}
+    </h3>
+                  <p>Telah Berlalu</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
+
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
             </div>
         </div>
-
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{ date('Y-m-d') }}</h3>
+              @if($latestOngoingTernak)
+              <h3>{{ $ternak->sortByDesc('created_at')->first()->created_at->format('Y-m-d') }}</h3>
               <p>Tanggal Ternak Mulai</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -53,8 +66,12 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>38</h3>
+              @if($latestOngoingTernak)
+              <h3>{{ $ternak->sortByDesc('created_at')->first()->total_awal_ayam }}</h3>
               <p class="text-wrap">Stok Awal Ayam</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>

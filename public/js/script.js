@@ -46,4 +46,34 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(endTernakModal);
         }
     };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const elapsedTimeElement = document.getElementById("elapsedTime");
+        const createdAt =
+            "{{ $latestOngoingTernak ? $latestOngoingTernak->created_at : null }}";
+
+        if (elapsedTimeElement && createdAt) {
+            updateElapsedTime(elapsedTimeElement, createdAt); // Initial update
+            setInterval(
+                () => updateElapsedTime(elapsedTimeElement, createdAt),
+                1000
+            ); // Update every second
+        }
+
+        function updateElapsedTime(element, createdAt) {
+            const start = moment(createdAt);
+            const now = moment();
+            const duration = moment.duration(now.diff(start));
+
+            element.textContent =
+                duration.days() +
+                " days " +
+                duration.hours() +
+                " hours " +
+                duration.minutes() +
+                " minutes " +
+                duration.seconds() +
+                " seconds";
+        }
+    });
 });
