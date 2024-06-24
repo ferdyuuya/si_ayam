@@ -43,10 +43,8 @@ class TernakController extends Controller
             'ayam_mati' => 'required|integer|min:0',
             'ayam_sakit' => 'required|integer|min:0',
             'ayam_berhasil' => 'required|integer|min:0',
-            'total_awal_ayam' => 'required|integer|min:0',
         ]);
 
-        dd($request->all());
         $ternak = Ternak::findOrFail($id); // Use findOrFail for automatic 404 if not found
 
         if ($ternak->is_ongoing) {

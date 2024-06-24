@@ -94,7 +94,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Akhiri Masa Ternak</h2>
-                <form action="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" method="POST">
+                <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
                     @csrf
                     @method('PUT')
                     <label for="ayam_mati">Ayam Mati:</label>
