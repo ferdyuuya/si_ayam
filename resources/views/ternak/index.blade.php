@@ -34,8 +34,8 @@
               @endphp
               @if ($latestOngoingTernak)
                   <h3 id="elapsedTime">
-        {{ \Carbon\CarbonInterval::seconds(\Carbon\Carbon::parse($latestOngoingTernak->created_at)->diffInSeconds())->cascade()->forHumans() }}
-    </h3>
+                      {{ \Carbon\CarbonInterval::seconds(\Carbon\Carbon::parse($latestOngoingTernak->created_at)->diffInSeconds())->cascade()->forHumans() }}
+                  </h3>
                   <p>Telah Berlalu</p>
               @else
                   <h3>No data available</h3>
