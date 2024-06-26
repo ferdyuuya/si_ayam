@@ -90,7 +90,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Tambahkan Pangan</h2>
-                <form action="{{ route('pangan.addPangan') }}" method="POST">
+                <form action="{{ route('pangan.addStok') }}" method="POST">
                     @csrf
                     <label for="pemasukan_stok">Jumlah pangan</label>
                     <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg">
@@ -102,11 +102,11 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Pangan Keluar</h2>
-                <form action="{{ route('pangan.addPangan') }}" method="POST">
+                <form action="{{ route('pangan.subtractStock') }}" method="POST">
                     @csrf
-                    <label for="pemasukan_stok">Jumlah pangan</label>
-                    <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg">
-                    <button type="submit">Tambahkan Pangan</button>
+                  <label for="pengeluaran_stok">Jumlah pangan</label>
+                    <input type="text" id="pengeluaran_stok" name="pengeluaran_stok" placeholder="60kg">
+                    <button type="submit">Kurangi Pangan</button>
                 </form>
             </div>
         </div>

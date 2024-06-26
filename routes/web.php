@@ -20,8 +20,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //Pangan
 Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
 Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
-Route::post('/input_pangan', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addPangan');
-
+Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
+Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStock'])->middleware('auth')->name('pangan.subtractStock');
 
 //Ternak
 Route::get('/ternak', [TernakController::class, 'index'])->name('ternak');

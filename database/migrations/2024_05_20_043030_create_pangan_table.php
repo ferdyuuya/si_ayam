@@ -15,6 +15,7 @@ class CreatePanganTable extends Migration
     {
         Schema::create('pangan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_ternak');
             $table->integer('pengeluaran_stok')->default(0);
             $table->integer('stok_sekarang')->default(0);
             $table->integer('pemasukan_stok')->default(0);
