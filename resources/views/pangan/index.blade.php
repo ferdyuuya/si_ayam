@@ -64,22 +64,20 @@
           <div class="small-box bg-warning">
             <div class="inner">
               <h3>38</h3>
-              <p class="text-wrap">Pemasukan Pangan 1 Bulan Terakhir</p>
+              <p class="text-wrap">Pemasukan Pangan 1 Bulan</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+         </div>
       </div>
       <!-- Tambahkan Pangan button -->
       <div class="view-button">
-        <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</button>
-      </div>
-
+        <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</button>
       <div class="view-button">
         <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
+      </div>
       </div>
     </div>
 
@@ -124,7 +122,6 @@
           </tbody>
         </table>
       </div>
-      <!-- /.card-body -->
     </div>
   </section>
 </div>

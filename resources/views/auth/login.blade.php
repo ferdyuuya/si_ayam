@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-4">
-                <h2 class="text-center">Login</h2>
+                <h2 class="text-center">Selamat Datang</h2>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
