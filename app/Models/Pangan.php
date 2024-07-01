@@ -16,4 +16,8 @@ class Pangan extends Model
         'update_pangan',
         'updated_by'
     ];
+    public function ternak()
+    {
+        return $this->belongsTo(Ternak::class, 'id_ternak'); // Assuming 'id_ternak' is the foreign key in the Pangan table
+    }
 }

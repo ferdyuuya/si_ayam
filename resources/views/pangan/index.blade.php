@@ -94,6 +94,7 @@
                     @csrf
                     <label for="pemasukan_stok">Jumlah pangan</label>
                     <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg">
+                    
                     <button type="submit">Tambahkan Pangan</button>
                 </form>
             </div>
@@ -102,7 +103,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Pangan Keluar</h2>
-                <form action="{{ route('pangan.subtractStock') }}" method="POST">
+                <form action="{{ route('pangan.subtractStok') }}" method="POST">
                     @csrf
                   <label for="pengeluaran_stok">Jumlah pangan</label>
                     <input type="text" id="pengeluaran_stok" name="pengeluaran_stok" placeholder="60kg">
@@ -134,6 +135,7 @@
                 <td>{{ $kolom_pangan->pemasukan_stok }}</td>
                 <td>{{ $kolom_pangan->pengeluaran_stok }}</td>
                 <td>{{ $kolom_pangan->stok_sekarang }}</td>
+                <td>{{ $kolom_pangan->id_ternak }}</td> 
                 <td>{{ $kolom_pangan->updated_by }}</td> 
               </tr>
               @endforeach
