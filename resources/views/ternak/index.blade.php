@@ -1,9 +1,8 @@
 @extends('layouts.main')
-
 @section('title', 'Ternak')
 
 @section('content_header')
-  <h1>Ternak</h1>
+  <h1>Pangan</h1>
 @stop
 
 @section('content')
@@ -23,53 +22,66 @@
       </div>
     </div>
   </div>
-
+  
   <section class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>150</h3>
-              <p>Hari</p>
+              @php
+                  $latestOngoingTernak = $ternak->where('is_ongoing', 1)->sortByDesc('created_at')->first();
+              @endphp
+              @if ($latestOngoingTernak)
+                  <h3 id="elapsedTime">
+                      {{ \Carbon\CarbonInterval::seconds(\Carbon\Carbon::parse($latestOngoingTernak->created_at)->diffInSeconds())->cascade()->forHumans() }}
+                  </h3>
+                  <p>Telah Berlalu</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
+
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
+            </div>
         </div>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>{{ date('Y-m-d') }}</h3>
+              @if($latestOngoingTernak)
+              <h3>{{ $ternak->sortByDesc('created_at')->first()->created_at->format('Y-m-d') }}</h3>
               <p>Tanggal Ternak Mulai</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
+            </div>
         </div>
+
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>38</h3>
+              @if($latestOngoingTernak)
+              <h3>{{ $ternak->sortByDesc('created_at')->first()->total_awal_ayam }}</h3>
               <p class="text-wrap">Stok Awal Ayam</p>
+              @else
+                  <h3>No data available</h3>
+              @endif
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
+           </div>
         </div>
         <div>
           <div class="view-button">
-            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Mulai Ternak</button>
+            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</button>
           </div>
-          {{-- <div class="view-button">
-            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan Masa Ternak</button>
-          </div> --}}
           <div class="view-button">
             <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
           </div>
@@ -79,67 +91,92 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Mulai Ternak</h2>
-            <form action="proses.php" method="post">
-              <label for="tanggalMulai">Tanggal Mulai:</label>
-              <input type="date" id="tanggalMulai" name="tanggalMulai" required>
-      
-              <label for="totalAyam">Total Ayam:</label>
-              <input type="number" id="totalAyam" name="totalAyam" min="1" required>
-      
-              <fieldset>
-                  <legend>Kolom 1</legend>
-      
-                  <label for="kolom1MulaiPanen">Mulai Panen:</label>
-                  <input type="text" id="kolom1MulaiPanen" name="kolom1MulaiPanen">
-      
-                  </fieldset>
-      
-              <fieldset>
-                  <legend>Kolom 2</legend>
-      
-                  <label for="kolom2MulaiPanen">Mulai Panen:</label>
-                  <input type="text" id="kolom2MulaiPanen" name="kolom2MulaiPanen">
-      
-                  </fieldset>
-      
-              <button type="submit" class="submit">Simpan</button>
-          </form>
+            <h2>Tambahkan Pangan</h2>
+            <form action="{{ route('ternak.store') }}" method="POST">
+              @csrf
+              <label for="totalAwalAyam">Jumlah pangan</label>
+              <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
+              <button type="submit">Tambahkan Pangan</button>
+            </form>
           </div>
         </div>
-      </div>
+        
+        <div id="endTernakModal" class="modal"> //for ternak is_ongoing == true
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Akhiri Masa Ternak</h2>
+                <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <label for="ayam_mati">Ayam Mati:</label>
+                    <input type="number" id="ayam_mati" name="ayam_mati" placeholder="0" min="0" required>
+
+                    <label for="ayam_sakit">Ayam Sakit:</label>
+                    <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required>
+
+                    <label for="ayam_berhasil">Ayam Berhasil:</label>
+                    <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required>
+
+                    <button type="submit">Selesaikan Ternak</button>
+                </form>
+            </div>
+        </div>
+      </div> 
     </div>
 
     <div class="card">
-      <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Ayam Mati</th>
-              <th>Ayam Hidup</th>
-              <th>Ayam Berhasil</th>
-              <th>Total Ayam</th>
-              <th>Total Awal Ayam</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($ternak as $kolom_ternak)
-            <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $kolom_ternak->ayam_mati }}</td>
-              <td>{{ $kolom_ternak->ayam_sakit }}</td>
-              <td>{{ $kolom_ternak->ayam_berhasil }}</td>
-              <td>{{ $kolom_ternak->total_ayam }}</td>
-              <td>{{ $kolom_ternak->total_awal_ayam }}</td>
-              <td>{{ $kolom_ternak->is_ongoing }}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Ayam Mati</th>
+                <th>Ayam Sakit</th>
+                <th>Ayam Berhasil</th>
+                <th>Total Ayam</th>
+                <th>Total Awal Ayam</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($ternak as $kolom_ternak)
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $kolom_ternak->ayam_mati }}</td>
+                <td>{{ $kolom_ternak->ayam_sakit }}</td>
+                <td>{{ $kolom_ternak->ayam_berhasil }}</td>
+                <td>{{ $kolom_ternak->total_ayam }}</td>
+                <td>{{ $kolom_ternak->total_awal_ayam }}</td>
+                <td>{{ $kolom_ternak->is_ongoing }}</td> 
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
     </div>
+
+    {{-- <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Mulai Ternak</h2>
+          <form action="{{ route('ternak.store') }}" method="POST">
+            @csrf
+            <label for="total_awal_ayam">Jumlah pangan</label>
+            <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
+            <button type="submit">Tambahkan Pangan</button>
+          </form>
+        </div>
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Akhiri Masa Ternak</h2>
+          <form action="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" method="POST">
+            @csrf
+            <label for="total_awal_ayam">Jumlah pangan</label>
+            <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
+            <button type="submit">Tambahkan Pangan</button>
+          </form>
+        </div>
+    </div> --}}
   </section>
 </div>
 

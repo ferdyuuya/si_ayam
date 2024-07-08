@@ -19,19 +19,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Pangan
 Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
-Route::get('/input_pangan', [PanganController::class, 'add_index'])->name('input_pangan');
-
+Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
+Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
+Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
 
 //Ternak
 Route::get('/ternak', [TernakController::class, 'index'])->name('ternak');
 Route::get('/input_ternak', [TernakController::class, 'add'])->name('ternak.add');
 Route::post('/input_ternak', [TernakController::class, 'store'])->name('ternak.store');
+Route::match(['put', 'post'], '/ternak/end/{id}', [TernakController::class, 'update'])->name('ternak.update');
 
 
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
-
-
-
-

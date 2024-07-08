@@ -20,10 +20,11 @@ class TernakController extends Controller
         return view('ternak.add');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
-        'total_awal_ayam' => 'required|integer|min:2000',
-    ]);
+            'total_awal_ayam' => 'required|integer|min:2000',
+        ]);
 
         $ternak = new Ternak;
         $ternak->ayam_mati = 0;
@@ -36,18 +37,32 @@ class TernakController extends Controller
         return redirect('/ternak');
     }
 
-    public function update(Request $request, $id){
-        
-        $ternak = Ternak::find($id);
-    
-        if ($ternak->is_ongoing === true) {
-            $ternak->ayam_mati = $request->ayam_mati;
-            $ternak->ayam_sakit = $request->ayam_sakit;
-            $ternak->ayam_berhasil = $request->ayam_berhasil;
-            $ternak->total_ayam = $request->total_ayam;
-            $ternak->total_awal_ayam = $request->total_awal_ayam;
-            $ternak->is_ongoing = false; //Phase Ternak is done
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'ayam_mati' => 'required|integer|min:0',
+            'ayam_sakit' => 'required|integer|min:0',
+            'ayam_berhasil' => 'required|integer|min:0',
+        ]);
+
+        $ternak = Ternak::findOrFail($id); // Use findOrFail for automatic 404 if not found
+
+        if ($ternak->is_ongoing) {
+            $ternak->fill($validatedData);
+
+            // Calculate total_ayam
+            $ternak->total_ayam = $ternak->ayam_mati + $ternak->ayam_sakit + $ternak->ayam_berhasil;
+
+            // Calculate total_awal_ayam
+            // $ternak->total_awal_ayam = $ternak->total_awal_ayam - $ternak->total_ayam;
+
+            $ternak->is_ongoing = false;
+
             $ternak->save();
+
+            return redirect()->back()->with('success', 'Data ternak berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Masa ternak sudah berakhir.');
         }
     }
 }
