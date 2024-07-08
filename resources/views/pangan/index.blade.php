@@ -121,7 +121,7 @@
               <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Stok Masuk</th>
+                <th>Stok Pangan</th>
                 <th>Stok Pangan Keluar</th>
                 <th>Stok Sekarang</th>
                 <th>Diupdate oleh</th>
