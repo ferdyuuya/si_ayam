@@ -1,25 +1,100 @@
-// Get the modal
-var modal = document.getElementById("myModal");
+document.addEventListener("DOMContentLoaded", function () {
+    var startTernakModal = document.getElementById("startTernakModal");
+    var endTernakModal = document.getElementById("endTernakModal");
+    var startTernakBtn = document.getElementById("startTernak");
+    var endTernakBtn = document.getElementById("endTernak");
 
-// Get the button that opens the modal
-var btn = document.getElementById("openPanganBtn");
+    var tambahPanganModal = document.getElementById("tambahPanganModal");
+    var kurangPanganModal = document.getElementById("kurangPanganModal");
+    var tambahPanganBtn = document.getElementById("tambahPanganBtn");
+    var kurangPanganBtn = document.getElementById("kurangPanganBtn");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    var spans = document.getElementsByClassName("close");
 
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+    // Function to open a modal
+    function openModal(modal) {
+        modal.style.display = "block";
+    }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
+    // Function to close a modal
+    function closeModal(modal) {
         modal.style.display = "none";
     }
-}
+
+    // Event listeners for buttons
+    if (startTernakBtn) {
+        startTernakBtn.onclick = function () {
+            openModal(startTernakModal);
+            console.log("Opened");
+        };
+    }
+
+    // Fixed event listener for the endTernak button
+    if (endTernakBtn) {
+        endTernakBtn.onclick = function () {
+            openModal(endTernakModal); // Open the endTernakModal
+            console.log("Closed");
+        };
+    }
+
+    if (tambahPanganBtn) {
+        tambahPanganBtn.onclick = function () {
+            openModal(tambahPanganModal);
+            console.log("Opened");
+        };
+    }
+
+    // Fixed event listener for the endTernak button
+    if (kurangPanganBtn) {
+        kurangPanganBtn.onclick = function () {
+            openModal(kurangPanganModal); // Open the endTernakModal
+            console.log("Closed");
+        };
+    }
+
+    // Event listeners for close buttons
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].onclick = function () {
+            closeModal(this.closest(".modal")); // Close the closest modal
+        };
+    }
+
+    // Close modal on click outside
+    window.onclick = function (event) {
+        if (event.target == startTernakModal) {
+            closeModal(startTernakModal);
+        } else if (event.target == endTernakModal) {
+            closeModal(endTernakModal);
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const elapsedTimeElement = document.getElementById("elapsedTime");
+        const createdAt =
+            "{{ $latestOngoingTernak ? $latestOngoingTernak->created_at : null }}";
+
+        if (elapsedTimeElement && createdAt) {
+            updateElapsedTime(elapsedTimeElement, createdAt); // Initial update
+            setInterval(
+                () => updateElapsedTime(elapsedTimeElement, createdAt),
+                1000
+            ); // Update every second
+        }
+
+        function updateElapsedTime(element, createdAt) {
+            const start = moment(createdAt);
+            const now = moment();
+            const duration = moment.duration(now.diff(start));
+
+            element.textContent =
+                duration.days() +
+                " days " +
+                duration.hours() +
+                " hours " +
+                duration.minutes() +
+                " minutes " +
+                duration.seconds() +
+                " seconds";
+        }
+    });
+});
