@@ -3,7 +3,7 @@
 @section('title', 'Ternak')
 
 @section('content_header')
-  <h1>Pangan</h1>
+  <h1>Ternak</h1>
 @stop
 
 @section('content')
@@ -12,12 +12,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Pangan</h1>
+          <h1 class="m-0">Ternak</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Pangan</li>
+            <li class="breadcrumb-item active">Ternak</li>
           </ol>
         </div>
       </div>
@@ -65,8 +65,11 @@
         </div>
         <div>
           <div class="view-button">
-            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Tambahkan Pangan</button>
+            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Mulai Ternak</button>
           </div>
+          {{-- <div class="view-button">
+            <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan Masa Ternak</button>
+          </div> --}}
           <div class="view-button">
             <button id="openPanganBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; background-color: green; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
           </div>
@@ -76,13 +79,32 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Tambahkan Pangan</h2>
-            <form action="{{ route('ternak.store') }}" method="POST">
-              @csrf
-              <label for="totalAwalAyam">Jumlah pangan</label>
-              <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
-              <button type="submit">Tambahkan Pangan</button>
-            </form>
+            <h2>Mulai Ternak</h2>
+            <form action="proses.php" method="post">
+              <label for="tanggalMulai">Tanggal Mulai:</label>
+              <input type="date" id="tanggalMulai" name="tanggalMulai" required>
+      
+              <label for="totalAyam">Total Ayam:</label>
+              <input type="number" id="totalAyam" name="totalAyam" min="1" required>
+      
+              <fieldset>
+                  <legend>Kolom 1</legend>
+      
+                  <label for="kolom1MulaiPanen">Mulai Panen:</label>
+                  <input type="text" id="kolom1MulaiPanen" name="kolom1MulaiPanen">
+      
+                  </fieldset>
+      
+              <fieldset>
+                  <legend>Kolom 2</legend>
+      
+                  <label for="kolom2MulaiPanen">Mulai Panen:</label>
+                  <input type="text" id="kolom2MulaiPanen" name="kolom2MulaiPanen">
+      
+                  </fieldset>
+      
+              <button type="submit" class="submit">Simpan</button>
+          </form>
           </div>
         </div>
       </div>

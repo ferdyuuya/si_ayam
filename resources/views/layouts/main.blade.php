@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>SI-Ternak</title>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -32,7 +34,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset ('lte/dist/img/me.jpg') }}" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="{{ asset ('lte/dist/img/logo1.png') }}" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -43,7 +45,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{ asset ('lte/dist/img/me.jpg') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset ('lte/dist/img/logo1.png') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SI-Ternak</span>
     </a>
 
