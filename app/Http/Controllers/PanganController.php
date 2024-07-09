@@ -56,52 +56,51 @@ class PanganController extends Controller
 
     public function subtractStok(Request $request)
     {
-        $validatedData = $request->validate(['pengeluaran_stok' => 'required|integer|min:0']);
+        // Validasi input
+        $validatedData = $request->validate([
+            'pengeluaran_stok' => 'required|integer|min:0'
+        ]);
 
-        if (Auth::user()->status != 0) { // 0 means false == not pengurus
+        // Cek izin pengguna
+        if (Auth::user()->status != 0) { // 0 berarti false == bukan pengurus
             return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengurangi stok.');
         }
 
         try {
-            $ongoingTernak = null;
-            $ternakId = $request->has('id_ternak') ? $request->input('id_ternak') : null;
+            // Ambil ternak tertentu jika id_ternak disediakan
+            $ternakId = $request->input('id_ternak');
+            $ongoingTernak = Ternak::where('is_ongoing', 1)
+                ->when($ternakId, function ($query, $ternakId) {
+                    return $query->where('id', $ternakId);
+                })
+                ->first();
 
-            // Prioritize specific ternak if id provided
-            if ($ternakId) {
-                $ongoingTernak = Ternak::where('id', $ternakId)->where('is_ongoing', 1)->first();
-            }
-
-            // If no specific ternak or not found, use any ongoing ternak
-            if (!$ongoingTernak) {
-                $ongoingTernak = Ternak::where('is_ongoing', 1)->first();
-            }
-
+            // Cek apakah ada ternak yang sedang berlangsung
             if (!$ongoingTernak) {
                 return redirect()->back()->with('error', 'Tidak ada ternak yang sedang berlangsung. Stok tidak bisa dikurangi.');
             }
 
-            $pangan = new Pangan();
-            $pangan->pengeluaran_stok = $request->pengeluaran_stok;
-
-            // If there previous record, start with the new pengeluaran_stok
+            // Ambil stok terbaru dari catatan terakhir
             $latestPangan = Pangan::latest('update_pangan')->first();
-            if ($latestPangan) {
-                $pangan->stok_sekarang = $latestPangan->stok_sekarang - $request->pengeluaran_stok;
-            } else {
-                $pangan->stok_sekarang = 0;
-            }
+            $currentStock = $latestPangan ? $latestPangan->stok_sekarang : 0;
 
-            $pangan->id_ternak = $ongoingTernak->id; // Use the retrieved ongoing ternak's id
+            // Buat record Pangan baru
+            $pangan = new Pangan();
+            $pangan->pengeluaran_stok = $validatedData['pengeluaran_stok'];
+            $pangan->stok_sekarang = $currentStock - $validatedData['pengeluaran_stok'];
+
+            // Tetapkan atribut lain
+            $pangan->id_ternak = $ongoingTernak->id;
             $pangan->update_pangan = now();
-            $pangan->updated_by = auth()->user()->name;
+            $pangan->updated_by = Auth::user()->name;
 
+            // Simpan record Pangan baru
             $pangan->save();
 
             return redirect()->back()->with('success', 'Stok pangan berhasil dikurangi.');
-        } catch (ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'Tidak ada ternak yang sedang berlangsung. Stok tidak bisa dikurangi.');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.'); // Handle other potential errors
+            // Tangani pengecualian
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
         }
     }
 }

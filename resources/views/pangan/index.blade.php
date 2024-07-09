@@ -124,6 +124,7 @@
                 <th>Stok Pangan</th>
                 <th>Stok Pangan Keluar</th>
                 <th>Stok Sekarang</th>
+                <th>Ternak yang sedang berlangsung</th>
                 <th>Diupdate oleh</th>
               </tr>
             </thead>
