@@ -113,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div class="card card-secondary">
+      {{-- <div class="card card-secondary">
         <div class="card-header">
           <h3 class="card-title">Default Card Example</h3>
           <div class="card-tools">
@@ -195,7 +195,7 @@
         </div>
         <!-- /.card-body -->
         <!-- /.card-footer -->
-      </div>
+      </div> --}}
 
 
     </section>

@@ -11,7 +11,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-           <h1 class="m-0">Pangan</h1>
+           <h1 class="m-0">Ternak</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -38,13 +38,15 @@
                   </h3>
                   <p>Telah Berlalu</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
 
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              {{-- <i class="ion ion-bag"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            
             </div>
         </div>
         <div class="col-lg-3 col-6">
@@ -54,12 +56,14 @@
               <h3>{{ $ternak->sortByDesc('created_at')->first()->created_at->format('Y-m-d') }}</h3>
               <p>Tanggal Ternak Mulai</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        
             </div>
         </div>
 
@@ -70,12 +74,14 @@
               <h3>{{ $ternak->sortByDesc('created_at')->first()->total_awal_ayam }}</h3>
               <p class="text-wrap">Stok Awal Ayam</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              {{-- <i class="ion ion-person-add"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            
            </div>
         </div>
 
@@ -86,12 +92,12 @@
         
             @if ($ongoingTernak)
                 {{-- <a href="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Akhiri Masa Ternak</a> --}}
-                <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Selesaikan ternak</button> 
+                <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 40%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
             @else
-                <button id="startTernak" class="btn btn-success" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Mulai Ternak</button> 
+                <button id="startTernak" class="btn btn-success" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #96C9F4; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
             @endif
         
-            <button id="exportBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">Export ke PDF dan Excel</button>
+            <button id="exportBtn" class="btn btn-primary" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
         </div>
         
         <div id="startTernakModal" class="modal">

@@ -38,13 +38,14 @@
                   </h3>
                   <p>Telah Berlalu</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
 
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              {{-- <i class="ion ion-bag"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
@@ -54,12 +55,13 @@
               <h3>{{ $pangan->sortByDesc('created_at')->first()->created_at->format('Y-m-d') }}</h3>
               <p>Tanggal pangan Mulai</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-6">
@@ -69,20 +71,19 @@
               <h3>{{ $pangan->sortByDesc('created_at')->first()->total_awal_ayam }}</h3>
               <p class="text-wrap">Stok Awal Ayam</p>
               @else
-                  <h3>No data available</h3>
+                  <h4>No data available</h4>
               @endif
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              {{-- <i class="ion ion-person-add"></i> --}}
             </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
         </div>
         <div class="col-lg-3 col-6">
-            <button id="tambahPanganBtn" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Tambahkan pangan</button> 
-            <button id="exportBtn" class="btn btn-primary" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">Export ke PDF dan Excel</button>
-            </div>
-            <div class="col-lg-3 col-6">
-              <button id="kurangPanganBtn" class="btn btn-success" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Kurang Pangan</button> 
+            <button id="tambahPanganBtn" class="btn btn-danger" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #468585; color: white; margin-bottom: 10px;">Tambahkan pangan</button> 
+            <button id="exportBtn" class="btn btn-primary" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
+            <button id="kurangPanganBtn" class="btn btn-success" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #9CDBA6; color: white; margin-bottom: 10px;">Kurang Pangan</button> 
             </div>
             
         {{-- modal --}}
@@ -121,7 +122,7 @@
               <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Stok Masuk</th>
+                <th>Stok Pangan</th>
                 <th>Stok Pangan Keluar</th>
                 <th>Stok Sekarang</th>
                 <th>Ternak yang sedang berlangsung</th>
