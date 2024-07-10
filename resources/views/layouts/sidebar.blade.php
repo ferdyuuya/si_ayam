@@ -26,11 +26,11 @@
           <i class="nav-icon fas fa-th"></i>
           <p>
             Pangan
-            <i class="right fas fa-angle-left"></i>
+            {{-- <i class="right fas fa-angle-left"></i> --}}
           </p>
         </a>
         <!-- Dropdown Menu Pangan -->
-        <ul class="nav nav-treeview">
+        {{-- <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="{{ route('pangan') }}" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
@@ -46,17 +46,17 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> --}}
       <li class="nav-item {{ request()->is('ternak') ? 'menu-open' : '' }}">
         <a href="{{ route('ternak') }}" class="nav-link {{ request()->is('ternak') ? 'active' : '' }}">
           <i class="nav-icon fas fa-th"></i>
           <p>
             Ternak
-            <i class="right fas fa-angle-left"></i>
+            {{-- <i class="right fas fa-angle-left"></i> --}}
           </p>
         </a>
         <!-- Dropdown Menu Ternak -->
-        <ul class="nav nav-treeview">
+        {{-- <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="{{ route('ternak') }}" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
@@ -71,7 +71,7 @@
               <p>Input Ternak</p>
             </a>
           </li>
-        </ul>
+        </ul> --}}
       </li>
       <li class="nav-item">
         <a href="{{ route('profile') }}" class="nav-link">
