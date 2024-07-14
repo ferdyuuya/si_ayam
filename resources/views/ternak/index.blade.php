@@ -31,6 +31,7 @@
             <div class="inner">
               @php
                   $latestOngoingTernak = $ternak->where('is_ongoing', 1)->sortByDesc('created_at')->first();
+                  $role = Auth::user()->status ? 1 : 0;
               @endphp
               @if ($latestOngoingTernak)
                   <h3 id="elapsedTime">
@@ -89,15 +90,16 @@
             @php
                 $ongoingTernak = $ternak->where('is_ongoing', 1)->first();
             @endphp
-        
-            @if ($ongoingTernak)
-                {{-- <a href="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Akhiri Masa Ternak</a> --}}
-                <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 40%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
-            @else
-                <button id="startTernak" class="btn btn-success" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #96C9F4; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
+            @if($role == 0)
+              @if ($ongoingTernak)
+                  {{-- <a href="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Akhiri Masa Ternak</a> --}}
+                  <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 40%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
+              @else
+                  <button id="startTernak" class="btn btn-success" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #96C9F4; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
+              @endif
             @endif
-        
-            <button id="exportBtn" class="btn btn-primary" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke PDF dan Excel</button>
+            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
+            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
         </div>
         
         <div id="startTernakModal" class="modal">

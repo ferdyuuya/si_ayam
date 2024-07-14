@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 
-
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('dashboard');
 
 //Login

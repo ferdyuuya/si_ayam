@@ -38,7 +38,7 @@ class PanganController extends Controller
         $pangan->pemasukan_stok = $request->pemasukan_stok;
 
 
-        // If there previous record, start with the new pemasukan_stok
+        // Jika tidak ada stok sebelumnya, maka stok sekarang adalah stok yang dimasukkan
         if ($latestPangan) {
             $pangan->stok_sekarang = $latestPangan->stok_sekarang + $request->pemasukan_stok;
         } else {
@@ -56,15 +56,9 @@ class PanganController extends Controller
 
     public function subtractStok(Request $request)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'pengeluaran_stok' => 'required|integer|min:0'
         ]);
-
-        // Cek izin pengguna
-        if (Auth::user()->status != 0) { // 0 berarti false == bukan pengurus
-            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengurangi stok.');
-        }
 
         try {
             // Ambil ternak tertentu jika id_ternak disediakan
@@ -99,7 +93,6 @@ class PanganController extends Controller
 
             return redirect()->back()->with('success', 'Stok pangan berhasil dikurangi.');
         } catch (Exception $e) {
-            // Tangani pengecualian
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
         }
     }
