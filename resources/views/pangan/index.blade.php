@@ -81,41 +81,47 @@
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
         </div>
-        <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-6" style="display: flex; flex-wrap: wrap; gap: 10px;">
           @if($role === 0)
-            <button id="tambahPanganBtn" class="btn btn-danger" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #468585; color: white; margin-bottom: 10px;">Tambahkan pangan</button>
+            <button id="tambahPanganBtn" class="btn btn-danger" style="flex: 1 1 calc(50% - 10px); height: 40px; display: flex; align-items: center; justify-content: center; background-color: #468585; color: white;">Tambahkan pangan</button>
           @endif
-            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
-            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
-            <button id="kurangPanganBtn" class="btn btn-success" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #9CDBA6; color: white; margin-bottom: 10px;">Kurang Pangan</button> 
+          <button id="exportPDFBtn" class="btn btn-danger" style="flex: 1 1 calc(50% - 10px); height: 40px; display: flex; align-items: center; justify-content: center; background-color: red; color: white;">Export PDF</button>
+          <button id="exportExcelBtn" class="btn btn-primary" style="flex: 1 1 calc(50% - 10px); height: 40px; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white;">Export ke Excel</button>
+          <button id="kurangPanganBtn" class="btn btn-success" style="flex: 1 1 calc(50% - 10px); height: 40px; display: flex; align-items: center; justify-content: center; background-color: #9CDBA6; color: rgb(101, 63, 63);">Kurang Pangan</button>
         </div>
+        
             
         {{-- modal --}}
         <div id="tambahPanganModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Tambahkan Pangan</h2>
-                <form action="{{ route('pangan.addStok') }}" method="POST">
-                    @csrf
-                    <label for="pemasukan_stok">Jumlah pangan</label>
-                    <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg">
-                    
-                    <button type="submit">Tambahkan Pangan</button>
-                </form>
-            </div>
+          <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
+            <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+            <h2>Tambahkan Pangan</h2>
+            <form action="{{ route('pangan.addStok') }}" method="POST">
+              @csrf
+              <div style="margin-bottom: 15px;">
+                <label for="pemasukan_stok" style="display: block; margin-bottom: 5px;">Jumlah pangan</label>
+                <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg" style="width: 100%; padding: 8px;">
+              </div>
+              <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Tambahkan Pangan</button>
+            </form>
           </div>      
-        <div id="kurangPanganModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Pangan Keluar</h2>
-                <form action="{{ route('pangan.subtractStok') }}" method="POST">
-                    @csrf
-                  <label for="pengeluaran_stok">Jumlah pangan</label>
-                    <input type="text" id="pengeluaran_stok" name="pengeluaran_stok" placeholder="60kg">
-                    <button type="submit">Kurangi Pangan</button>
-                </form>
-            </div>
         </div>
+
+          <div id="kurangPanganModal" class="modal">
+            <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
+              <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+              <h2>Pangan Keluar</h2>
+              <form action="{{ route('pangan.subtractStok') }}" method="POST">
+                @csrf
+                <div style="margin-bottom: 15px;">
+                  <label for="pengeluaran_stok" style="display: block; margin-bottom: 5px;">Jumlah pangan</label>
+                  <input type="text" id="pengeluaran_stok" name="pengeluaran_stok" placeholder="60kg" style="width: 100%; padding: 8px;">
+                </div>
+                <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Kurangi Pangan</button>
+              </form>
+            </div>
+          </div>
+          
       </div> 
     </div>
 

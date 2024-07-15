@@ -103,17 +103,20 @@
         </div>
         
         <div id="startTernakModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Mulai Ternak</h2>
-                <form action="{{ route('ternak.store') }}" method="POST">
-                    @csrf
-                    <label for="total_awal_ayam">Jumlah pangan</label>
-                    <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
-                    <button type="submit">Tambahkan Pangan</button>
-                </form>
-            </div>
+          <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
+            <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+            <h2>Mulai Ternak</h2>
+            <form action="{{ route('ternak.store') }}" method="POST">
+              @csrf
+              <div style="margin-bottom: 15px;">
+                <label for="total_awal_ayam" style="display: block; margin-bottom: 5px;">Jumlah pangan</label>
+                <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg" style="width: 100%; padding: 8px;">
+              </div>
+              <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Tambahkan Pangan</button>
+            </form>
+          </div>
         </div>
+        
         
         <div id="endTernakModal" class="modal"> //for ternak is_ongoing == true
           <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
