@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Pangan;
 use App\Models\Ternak;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PanganExport;
 
 class PanganController extends Controller
 {
@@ -20,6 +20,7 @@ class PanganController extends Controller
             'pangan' => Pangan::all(),
         ]);
     }
+
     public function add()
     {
         return view('pangan.input_pangan');
@@ -36,7 +37,6 @@ class PanganController extends Controller
         $latestPangan = Pangan::latest('update_pangan')->first();
         $pangan = new Pangan();
         $pangan->pemasukan_stok = $request->pemasukan_stok;
-
 
         // Jika tidak ada stok sebelumnya, maka stok sekarang adalah stok yang dimasukkan
         if ($latestPangan) {
@@ -95,5 +95,18 @@ class PanganController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
         }
+    }
+
+    // public function exportToPdf()
+    // {
+    //     $pangan = Pangan::all();
+    //     $pdf = PDF::loadView('pangan.export_pdf', compact('pangan'));
+    //     return $pdf->download('pangan.pdf');
+    // }
+
+    public function exportExcel()
+    {
+        $file_name = 'pangan_report_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new PanganExport, $file_name);
     }
 }
