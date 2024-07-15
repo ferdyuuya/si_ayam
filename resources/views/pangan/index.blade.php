@@ -67,8 +67,8 @@
           @if($role === 0)
             <button id="tambahPanganBtn" class="btn btn-danger w-100 mb-2" style="background-color: #468585; color: white;">Tambahkan pangan</button>
           @endif
-          <button id="exportPDFBtn" class="btn btn-danger w-100 mb-2" style="background-color: red; color: white;">Export PDF</button>
-          <button id="exportExcelBtn" class="btn btn-primary w-100 mb-2" style="background-color: #50B498; color: white;">Export ke Excel</button>
+          <a href="{{ route('pangan.exportToPdf') }}" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export PDF</a>
+          <a href="{{ route('pangan.exportExcel') }}" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export Excel</a>
           <button id="kurangPanganBtn" class="btn btn-success w-100 mb-2" style="background-color: #9CDBA6; color: white;">Kurang Pangan</button>
         </div>
       </div>

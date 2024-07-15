@@ -8,9 +8,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\PanganExport;
+use App\Export\PanganExport;
+// use PDF;
 
 class PanganController extends Controller
 {
@@ -97,16 +98,16 @@ class PanganController extends Controller
         }
     }
 
-    // public function exportToPdf()
-    // {
-    //     $pangan = Pangan::all();
-    //     $pdf = PDF::loadView('pangan.export_pdf', compact('pangan'));
-    //     return $pdf->download('pangan.pdf');
-    // }
+    public function exportToPdf()
+    {
+        $pangan = Pangan::all();
+        $pdf = PDF::loadView('pangan.export_pdf', compact('pangan'));
+        return $pdf->download('pangan.pdf');
+    }
 
     public function exportExcel()
     {
         $file_name = 'pangan_report_' . date('Y-m-d_H-i-s') . '.xlsx';
-        return Excel::download(new PanganExport, $file_name);
+        return Excel::download(new \App\Exports\PanganExport, $file_name);
     }
 }

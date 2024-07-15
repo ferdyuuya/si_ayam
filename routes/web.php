@@ -23,7 +23,8 @@ Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
 Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
 Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
 Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
-Route::post('/exportPangan_Excel', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');
+Route::get('/pangan/export', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');
+Route::get('/pangan/exportpdf', [PanganController::class, 'exportToPdf'])->middleware('auth')->name('pangan.exportToPdf');
 
 //Ternak
 Route::get('/ternak', [TernakController::class, 'index'])->name('ternak');
