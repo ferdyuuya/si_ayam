@@ -23,7 +23,7 @@ Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
 Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
 Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
 Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
-Route::get('/pangan/export', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');
+// Route::get('/pangan/export', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');
 Route::get('/pangan/exportpdf', [PanganController::class, 'exportToPdf'])->middleware('auth')->name('pangan.exportToPdf');
 
 //Ternak
@@ -31,6 +31,7 @@ Route::get('/ternak', [TernakController::class, 'index'])->name('ternak');
 Route::get('/input_ternak', [TernakController::class, 'add'])->name('ternak.add');
 Route::post('/input_ternak', [TernakController::class, 'store'])->name('ternak.store');
 Route::match(['put', 'post'], '/ternak/end/{id}', [TernakController::class, 'update'])->name('ternak.update');
+Route::get('/ternak/exportpdf', [TernakController::class, 'exportToPdf'])->middleware('auth')->name('ternak.exportToPdf');
 
 //Profile or add user
 Route::get('/profile', [RegisterController::class, 'index'])->name('profile');

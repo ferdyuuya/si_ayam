@@ -81,8 +81,8 @@
               <button id="startTernak" class="btn btn-success w-100 mb-2">Mulai Ternak</button> 
             @endif
           @endif
-          <button id="exportPDFBtn" class="btn btn-danger w-100 mb-2">Export PDF</button>
-          <button id="exportExcelBtn" class="btn btn-primary w-100 mb-2">Export ke Excel</button>
+          <a href="{{ route('ternak.exportToPdf') }}" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export PDF</a>
+          {{-- <button id="exportExcelBtn" class="btn btn-primary w-100 mb-2">Export ke Excel</button> --}}
         </div>
       </div>
 

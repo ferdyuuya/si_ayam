@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ternak;
 use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
+
 
 class TernakController extends Controller
 {
@@ -64,5 +66,12 @@ class TernakController extends Controller
         } else {
             return redirect()->back()->with('error', 'Masa ternak sudah berakhir.');
         }
+    }
+
+    public function exportToPdf()
+    {
+        $ternak = Ternak::all();
+        $pdf = PDF::loadView('ternak.export_pdf', compact('ternak')); 
+        return $pdf->download('ternak.pdf');
     }
 }
