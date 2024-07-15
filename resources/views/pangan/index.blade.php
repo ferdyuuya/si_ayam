@@ -83,11 +83,11 @@
         </div>
         <div class="col-lg-3 col-6">
           @if($role === 0)
-            <button id="tambahPanganBtn" class="btn btn-danger" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #468585; color: white; margin-bottom: 10px;">Tambahkan pangan</button>
+            <button id="tambahPanganBtn" class="btn btn-danger" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #468585; color: white; margin-bottom: 10px;">Tambahkan pangan</button>
           @endif
-            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
-            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
-            <button id="kurangPanganBtn" class="btn btn-success" style="width: 200px; height: 27%; display: flex; align-items: center; justify-content: center; background-color: #9CDBA6; color: white; margin-bottom: 10px;">Kurang Pangan</button> 
+            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
+            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
+            <button id="kurangPanganBtn" class="btn btn-success" style="width: 200px; height: 17%; display: flex; align-items: center; justify-content: center; background-color: #9CDBA6; color: white; margin-bottom: 10px;">Kurang Pangan</button> 
         </div>
             
         {{-- modal --}}

@@ -93,13 +93,13 @@
             @if($role == 0)
               @if ($ongoingTernak)
                   {{-- <a href="{{ route('ternak.update', ['id' => $ongoingTernak->id]) }}" class="btn btn-danger" style="width: 200px; height: 100%; display: flex; align-items: center; justify-content: center;">Akhiri Masa Ternak</a> --}}
-                  <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 40%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
+                  <button id="endTernak" class="btn btn-danger" style="width: 200px; height: 20%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
               @else
-                  <button id="startTernak" class="btn btn-success" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #96C9F4; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
+                  <button id="startTernak" class="btn btn-success" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #96C9F4; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
               @endif
             @endif
-            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
-            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 35%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
+            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
+            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
         </div>
         
         <div id="startTernakModal" class="modal">
@@ -116,28 +116,34 @@
         </div>
         
         <div id="endTernakModal" class="modal"> //for ternak is_ongoing == true
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Akhiri Masa Ternak</h2>
-                <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <label for="ayam_mati">Ayam Mati:</label>
-                    <input type="number" id="ayam_mati" name="ayam_mati" placeholder="0" min="0" required>
-
-                    <label for="ayam_sakit">Ayam Sakit:</label>
-                    <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required>
-
-                    <label for="ayam_berhasil">Ayam Berhasil:</label>
-                    <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required>
-
-                    <button type="submit">Selesaikan Ternak</button>
-                </form>
-            </div>
+          <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
+            <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+            <h2>Akhiri Masa Ternak</h2>
+            <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
+              @csrf
+              @method('PUT')
+          
+              <div style="margin-bottom: 15px;">
+                <label for="ayam_mati">Ayam Mati:</label>
+                <input type="number" id="ayam_mati" name="ayam_mati" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
+              </div>
+          
+              <div style="margin-bottom: 15px;">
+                <label for="ayam_sakit">Ayam Sakit:</label>
+                <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
+              </div>
+          
+              <div style="margin-bottom: 15px;">
+                <label for="ayam_berhasil">Ayam Berhasil:</label>
+                <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
+              </div>
+          
+              <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Selesaikan Ternak</button>
+            </form>
+          </div>
         </div>
-      </div> 
-    </div>
-
+      </div>
+          
     <div class="card">
         <div class="card-body">
           <table id="example1" class="table table-bordered table-striped">

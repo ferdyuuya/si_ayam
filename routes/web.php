@@ -32,3 +32,4 @@ Route::match(['put', 'post'], '/ternak/end/{id}', [TernakController::class, 'upd
 Route::get('/profile', function () {
     return view('profile');
 })->name('profile');
+
