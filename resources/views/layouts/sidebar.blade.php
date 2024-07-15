@@ -2,10 +2,17 @@
   <!-- Sidebar user panel (optional) -->
   {{-- <div class="user-panel mt-3 pb-3 mb-3" style="background-color: #2c3e50; padding: 10px; border-radius: 5px; color: #ecf0f1;"> --}}
     <div class="info" style="margin-bottom: 5px;">
-      <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Log as : Nama</a>
+    @php
+    $user = Auth::user();
+    @endphp
+      <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Log as : {{$user->name }}</a>
     </div>
     <div class="info">
-      <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role :</a>
+      @if($user->role == 0)
+        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Admin</a>
+      @else
+        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Pengurus</a>
+      @endif
     </div>
   {{-- </div> --}}
   
@@ -76,12 +83,31 @@
         </ul> --}}
       </li>
       <li class="nav-item">
-        <a href="{{ route('profile') }}" class="nav-link">
+        <a href="{{ route('profile.userlist') }}" class="nav-link">
           <i class="nav-icon fas fa-th"></i>
           <p>
-            Profile
+        Profile
           </p>
         </a>
+        <!-- Dropdown Menu Ternak -->
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+        <a href="{{ route('profile.userlist') }}" class="nav-link active">
+          <i class="far fa-circle nav-icon"></i>
+          <p>List User</p>
+        </a>
+          </li>
+        </ul>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+        <a href="{{ route('profile.changepassword', ['id' => $user->id]) }}" class="nav-link active">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Change Password</p>
+        </a>
+        </a>
+          </li>
+        </ul>
+      </li>
       </li>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
           @csrf
