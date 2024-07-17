@@ -13,7 +13,7 @@ class TernakController extends Controller
     public function index() //for view ternak
     {
         return view('ternak.index', [
-            'ternak' => Ternak::all(),
+            'ternak' => Ternak::paginate(10),
         ]);
     }
 

@@ -18,7 +18,7 @@ class PanganController extends Controller
     public function index()
     {
         return view('pangan.index', [
-            'pangan' => Pangan::all(),
+            'pangan' => Pangan::paginate(10),
         ]);
     }
 
