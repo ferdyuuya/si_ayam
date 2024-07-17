@@ -5,21 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Pangan;
 use App\Models\Ternak;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Export\PanganExport;
+// use PDF;
 
 class PanganController extends Controller
 {
     public function index()
     {
         return view('pangan.index', [
-            'pangan' => Pangan::all(),
+            'pangan' => Pangan::paginate(10),
         ]);
     }
+
     public function add()
     {
         return view('pangan.input_pangan');
@@ -37,8 +39,7 @@ class PanganController extends Controller
         $pangan = new Pangan();
         $pangan->pemasukan_stok = $request->pemasukan_stok;
 
-
-        // If there previous record, start with the new pemasukan_stok
+        // Jika tidak ada stok sebelumnya, maka stok sekarang adalah stok yang dimasukkan
         if ($latestPangan) {
             $pangan->stok_sekarang = $latestPangan->stok_sekarang + $request->pemasukan_stok;
         } else {
@@ -56,15 +57,9 @@ class PanganController extends Controller
 
     public function subtractStok(Request $request)
     {
-        // Validasi input
         $validatedData = $request->validate([
             'pengeluaran_stok' => 'required|integer|min:0'
         ]);
-
-        // Cek izin pengguna
-        if (Auth::user()->status != 0) { // 0 berarti false == bukan pengurus
-            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengurangi stok.');
-        }
 
         try {
             // Ambil ternak tertentu jika id_ternak disediakan
@@ -99,8 +94,20 @@ class PanganController extends Controller
 
             return redirect()->back()->with('success', 'Stok pangan berhasil dikurangi.');
         } catch (Exception $e) {
-            // Tangani pengecualian
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
         }
     }
+
+    public function exportToPdf()
+    {
+        $pangan = Pangan::all();
+        $pdf = PDF::loadView('pangan.export_pdf', compact('pangan'));
+        return $pdf->download('pangan.pdf');
+    }
+
+    // public function exportExcel()
+    // {
+    //     $file_name = 'pangan_report_' . date('Y-m-d_H-i-s') . '.xlsx';
+    //     return Excel::download(new \App\Exports\PanganExport, $file_name);
+    // }
 }
