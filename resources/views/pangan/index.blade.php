@@ -8,7 +8,9 @@
 @php
   $role = Auth::user()->status ? 1 : 0;
   $ternak = App\Models\Ternak::all(); 
-  $pangan = App\Models\Pangan::all(); 
+  $pangan = App\Models\Pangan::all();
+  $tambah_pangan = App\Models\TambahPangan::all(); 
+  $tambah_pangan = App\Models\KurangPangan::all(); 
   use Carbon\Carbon;
   $latestOngoingTernak = $ternak->where('is_ongoing', 1)->sortByDesc('created_at')->first();
   $daysSinceTernakStarted = $latestOngoingTernak ? Carbon::parse($latestOngoingTernak->created_at)->diffInDays() : 0;
@@ -74,32 +76,7 @@
         </div>
         
 
-      {{-- modal --}}
-      <div id="tambahPanganModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Tambahkan Pangan</h2>
-          <form action="{{ route('pangan.addStok') }}" method="POST">
-            @csrf
-            <label for="pemasukan_stok">Jumlah pangan</label>
-            <input type="text" id="pemasukan_stok" name="pemasukan_stok" placeholder="60kg" class="form-control mb-2">
-            <button type="submit" class="btn btn-primary">Tambahkan Pangan</button>
-          </form>
-        </div>
       </div>
-      <div id="kurangPanganModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Pangan Keluar</h2>
-          <form action="{{ route('pangan.subtractStok') }}" method="POST">
-            @csrf
-            <label for="pengeluaran_stok">Jumlah pangan</label>
-            <input type="text" id="pengeluaran_stok" name="pengeluaran_stok" placeholder="60kg" class="form-control mb-2">
-            <button type="submit" class="btn btn-primary">Kurangi Pangan</button>
-          </form>
-        </div>
-      </div>
-    </div>
 
     <div class="card mt-4">
       <div class="card-body">
@@ -130,11 +107,36 @@
               @endforeach
             </tbody>
           </table>
-          
         </div>
       </div>
     </div>
   </section>
 </div>
 
+
 @endsection
+
+<div id="tambahPanganModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Tambahkan Pangan</h2>
+          <form action="{{ route('pangan.addStok') }}" method="POST">
+            @csrf
+            <label for="tambah_pangan">Jumlah pangan</label>
+            <input type="text" id="tambah_pangan" name="tambah_pangan" placeholder="60kg" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Tambahkan Pangan</button>
+          </form>
+        </div>
+      </div>
+      <div id="kurangPanganModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Pangan Keluar</h2>
+          <form action="{{ route('pangan.subtractStok') }}" method="POST">
+            @csrf
+            <label for="keluar_pangan">Jumlah pangan</label>
+            <input type="text" id="keluar_pangan" name="keluar_pangan" placeholder="60kg" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Kurangi Pangan</button>
+          </form>
+        </div>
+      </div>

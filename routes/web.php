@@ -19,8 +19,8 @@ Route::post('/login', [LoginController::class, 'postLogin'])->name('login.store'
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Pangan
-Route::get('/pangan', [PanganController::class, 'index'])->name('pangan');
-Route::get('/input_pangan', [PanganController::class, 'add'])->name('pangan.add');
+Route::get('/pangan', [PanganController::class, 'index'])->middleware('auth')->name('pangan');
+Route::get('/input_pangan', [PanganController::class, 'add'])->middleware('auth')->name('pangan.add');
 Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
 Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
 // Route::get('/pangan/export', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');

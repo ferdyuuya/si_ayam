@@ -10,11 +10,7 @@ class Pangan extends Model
     use HasFactory;
     protected $table = 'pangan';
     protected $fillable = [
-        'pengeluaran_stok',
-        'stok_sekarang',
-        'pemasukan_stok',
-        'update_pangan',
-        'updated_by'
+        'stok_sekarang'
     ];
     public function ternak()
     {
