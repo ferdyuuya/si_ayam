@@ -8,7 +8,7 @@
       <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Log as : {{$user->name }}</a>
     </div>
     <div class="info">
-      @if($user->role == 0)
+      @if($user->status == 0)
         <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Admin</a>
       @else
         <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Pengurus</a>
