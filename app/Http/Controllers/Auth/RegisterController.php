@@ -29,10 +29,10 @@ class RegisterController extends Controller
     }
     public function storeUser(Request $request)
     {
-       if (Auth::user()->status != 0) { // 0 means false == not pengurus
+        if (Auth::user()->status != 0) { // 0 means false == not pengurus
             return redirect()->back()->with('error', 'Anda tidak memiliki izin.');
         }
-         
+
         $request->validate([
             'name' => 'required',
             'email' => 'required',
@@ -74,7 +74,11 @@ class RegisterController extends Controller
         $user->password = bcrypt($request->new_password);
         $user->save();
 
-        return redirect('/userlist');
+        if ($user->status == 0) {
+            return redirect('/userlist');
+        } else {
+            return redirect('/changepassword/{id}');
+        }
     }
 
 
@@ -87,8 +91,8 @@ class RegisterController extends Controller
     public function editUser(Request $request, $id)
     {
         if (Auth::user()->status != 0) { // 0 means false == not pengurus
-                return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan stok.');
-            }
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan stok.');
+        }
 
         $request->validate([
             'name' => 'required',
@@ -128,5 +132,4 @@ class RegisterController extends Controller
         // Redirect to profile page with success message
         return redirect('/userlist')->with('success', 'Pengguna berhasil dihapus.');
     }
-
 }

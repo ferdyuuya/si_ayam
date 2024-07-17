@@ -29,14 +29,14 @@
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="/" class="nav-link">
           <i class="nav-icon fas fa-th"></i>
           <p>
             Dashboard
           </p>
         </a>
-      </li>
+      </li> --}}
       <li class="nav-item {{ request()->is('pangan') ? 'menu-open' : '' }}">
         <a href="{{ route('pangan') }}" class="nav-link {{ request()->is('pangan') ? 'active' : '' }}">
           <i class="nav-icon fas fa-th"></i>
@@ -98,7 +98,7 @@
         </a>
         <!-- Dropdown Menu Ternak -->
         <ul class="nav nav-treeview">
-          @if($role !== 0)
+          @if($role == 0)
           <li class="nav-item">
             <a href="{{ route('profile.userlist') }}" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
