@@ -16,7 +16,14 @@
     </div>
   {{-- </div> --}}
   
-  
+@php
+  $role = Auth::user()->status ? 1 : 0;
+  $ternak = App\Models\Ternak::all(); 
+  $pangan = App\Models\Pangan::all(); 
+  use Carbon\Carbon;
+  $latestOngoingTernak = $ternak->where('is_ongoing', 1)->sortByDesc('created_at')->first();
+  $daysSinceTernakStarted = $latestOngoingTernak ? Carbon::parse($latestOngoingTernak->created_at)->diffInDays() : 0;
+@endphp
 
   <!-- Sidebar Menu -->
   <nav class="mt-2">
@@ -91,12 +98,14 @@
         </a>
         <!-- Dropdown Menu Ternak -->
         <ul class="nav nav-treeview">
+          @if($role !== 0)
           <li class="nav-item">
-        <a href="{{ route('profile.userlist') }}" class="nav-link active">
-          <i class="far fa-circle nav-icon"></i>
-          <p>List User</p>
-        </a>
+            <a href="{{ route('profile.userlist') }}" class="nav-link active">
+              <i class="far fa-circle nav-icon"></i>
+              <p>List User</p>
+            </a>
           </li>
+          @endif
         </ul>
         <ul class="nav nav-treeview">
           <li class="nav-item">

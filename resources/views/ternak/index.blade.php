@@ -76,55 +76,57 @@
         <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
           @if($role === 0)
             @if ($ongoingTernak)
-              <button id="endTernak" class="btn btn-danger w-100 mb-2">Selesaikan ternak</button> 
+              <button id="endTernak" class="btn btn-danger w-100 mb-2" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #dd3131; color: white; margin-bottom: 10px;">Selesaikan ternak</button> 
             @else
-              <button id="startTernak" class="btn btn-success w-100 mb-2">Mulai Ternak</button> 
+              <button id="startTernak" class="btn btn-primary" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Mulai Ternak</button> 
             @endif
-            <button id="exportPDFBtn" class="btn btn-danger" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: red; color: white; margin-bottom: 10px;">Export PDF</button>
-            <button id="exportExcelBtn" class="btn btn-primary" style="width: 200px; height: 25%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Export ke Excel</button>
-        </div>
-        
-        <div id="startTernakModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Mulai Ternak</h2>
-                <form action="{{ route('ternak.store') }}" method="POST">
-                    @csrf
-                    <label for="total_awal_ayam">Jumlah pangan</label>
-                    <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg">
-                    <button type="submit">Tambahkan Pangan</button>
-                </form>
-            </div>
-        </div>
-        
-        <div id="endTernakModal" class="modal"> //for ternak is_ongoing == true
-          <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
-            <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
-            <h2>Akhiri Masa Ternak</h2>
-            <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
-              @csrf
-              @method('PUT')
-          
-              <div style="margin-bottom: 15px;">
-                <label for="ayam_mati">Ayam Mati:</label>
-                <input type="number" id="ayam_mati" name="ayam_mati" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
-              </div>
-          
-              <div style="margin-bottom: 15px;">
-                <label for="ayam_sakit">Ayam Sakit:</label>
-                <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
-              </div>
-          
-              <div style="margin-bottom: 15px;">
-                <label for="ayam_berhasil">Ayam Berhasil:</label>
-                <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required style="width: 100%; padding: 8px; margin-top: 5px;">
-              </div>
-          
-              <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Selesaikan Ternak</button>
-            </form>
-          </div>
+          @endif
+          <a href="{{ route('ternak.exportToPdf') }}" class="btn btn-primary" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #3ce045; color: white; margin-bottom: 10px;">Export PDF</a>
+          {{-- <button id="exportExcelBtn" class="btn btn-primary w-100 mb-2">Export ke Excel</button> --}}
         </div>
       </div>
+      {{-- modal --}}
+      <div id="startTernakModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Mulai Ternak</h2>
+          <form action="{{ route('ternak.store') }}" method="POST">
+            @csrf
+            <label for="total_awal_ayam">Jumlah pangan</label>
+            <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Tambahkan Pangan</button>
+          </form>
+        </div>
+      </div>
+      
+      <div id="endTernakModal" class="modal">
+        <div class="modal-content" style="padding: 20px; background-color: #f5f5f5; border-radius: 10px;">
+          <span class="close" style="cursor: pointer; font-size: 24px; font-weight: bold;">&times;</span>
+          <h2>Akhiri Masa Ternak</h2>
+          <form action="{{ $ongoingTernak ? route('ternak.update', ['id' => $ongoingTernak->id]) : '#' }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+              <label for="ayam_mati">Ayam Mati:</label>
+              <input type="number" id="ayam_mati" name="ayam_mati" placeholder="0" min="0" required class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label for="ayam_sakit">Ayam Sakit:</label>
+              <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label for="ayam_berhasil">Ayam Berhasil:</label>
+              <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success">Selesaikan Ternak</button>
+          </form>
+        </div>
+      </div>
+    </div>
           
     <div class="card mt-4">
       <div class="card-body">
