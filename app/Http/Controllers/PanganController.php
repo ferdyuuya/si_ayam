@@ -38,6 +38,8 @@ class PanganController extends Controller
         // Counter untuk nomor urutan
         $counter = 1;
 
+
+
         // Return data or redirect as needed
         return view('pangan.index', compact('role', 'pangans', 'showpangans', 'daysSinceTernakStarted', 'counter'));
     }
