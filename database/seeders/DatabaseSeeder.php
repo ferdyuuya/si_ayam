@@ -33,6 +33,11 @@ class DatabaseSeeder extends Seeder
             'status' => true
         ]);
 
+        Pangan::create([
+            'stok_sekarang' => 0,
+            'updated_by' => 1,
+        ]);
+
         $faker = Factory::create();
 
         // for ($i = 1; $i <= 20; $i++) {

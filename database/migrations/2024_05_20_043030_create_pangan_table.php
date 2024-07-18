@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreatePanganTable extends Migration
 {
@@ -16,12 +17,10 @@ class CreatePanganTable extends Migration
         Schema::create('pangan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_ternak')->nullable();
-            $table->integer('pengeluaran_stok')->default(0);
-            $table->integer('stok_sekarang')->default(0);
-            $table->integer('pemasukan_stok')->default(0);
-            $table->date('update_pangan');
-            $table->string('updated_by');
-            $table->timestamps();
+            $table->integer('stok_sekarang')->unsigned();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('updated_by')->references('id')->on('users');
+            $table->timestamps(); 
         });
     }
 
