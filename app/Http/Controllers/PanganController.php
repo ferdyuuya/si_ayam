@@ -35,9 +35,10 @@ class PanganController extends Controller
             return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan stok.');
         }
 
-        $latestPangan = Pangan::latest('update_pangan')->first();
         $pangan = new Pangan();
         $pangan->pemasukan_stok = $request->pemasukan_stok;
+
+        $latestPangan = Pangan::latest('stok_sekarang')->first();
 
         // Jika tidak ada stok sebelumnya, maka stok sekarang adalah stok yang dimasukkan
         if ($latestPangan) {
@@ -97,6 +98,9 @@ class PanganController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
         }
     }
+
+
+
 
     public function exportToPdf()
     {
