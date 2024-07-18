@@ -12,9 +12,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tambah_pangan', function (Blueprint $table) {
+        Schema::create('operation_pangan', function (Blueprint $table) {
             $table->id();
-            $table->integer('stok_masuk');
+            $table->integer('stok_masuk')->nullable();
+            $table->integer('stok_keluar')->nullable();
             $table->unsignedBigInteger('stok_id');
             $table->unsignedBigInteger('id_ternak')->nullable();
             $table->foreign('stok_id')->references('id')->on('pangan');
@@ -24,16 +25,21 @@ return new class extends Migration
         });
 
         DB::unprepared('
-            CREATE TRIGGER update_stok_on_tambah_pangan
-            AFTER INSERT ON tambah_pangan
+            CREATE TRIGGER update_stok_on_tambah_kurang_pangan
+            AFTER INSERT ON operation_pangan
             FOR EACH ROW
             BEGIN
-            INSERT INTO pangan (id_ternak, stok_sekarang, updated_by, created_at, updated_at)
-            SELECT id_ternak, stok_sekarang + NEW.stok_masuk, NEW.updated_by, NOW(), NOW()
-            FROM pangan
-            WHERE id = NEW.stok_id;
-            
-
+                IF NEW.stok_keluar = 0 THEN
+                    INSERT INTO pangan (id_ternak, stok_sekarang, updated_by, created_at, updated_at)
+                    SELECT id_ternak, stok_sekarang + NEW.stok_masuk, NEW.updated_by, NOW(), NOW()
+                    FROM pangan
+                    WHERE id = NEW.stok_id;
+                ELSEIF NEW.stok_masuk = 0 THEN
+                    INSERT INTO pangan (id_ternak, stok_sekarang, updated_by, created_at, updated_at)
+                    SELECT id_ternak, stok_sekarang - NEW.stok_keluar, NEW.updated_by, NOW(), NOW()
+                    FROM pangan
+                    WHERE id = NEW.stok_id;
+                END IF;
             END;
         ');
     }

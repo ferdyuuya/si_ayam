@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Ternak;
 use App\Models\Pangan;
+use App\Models\TambahPangan;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory;
 
@@ -35,6 +36,10 @@ class DatabaseSeeder extends Seeder
 
         Pangan::create([
             'stok_sekarang' => 0,
+            'updated_by' => 1,
+        ]);
+        TambahPangan::create([
+            'stok_id' => 1,
             'updated_by' => 1,
         ]);
 

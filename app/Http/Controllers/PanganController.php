@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pangan;
 use App\Models\Ternak;
 use App\Models\TambahPangan;
+use App\Models\Showpangan;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -14,18 +15,32 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Export\PanganExport;
 use App\Models\KurangPangan;
 use Illuminate\Support\Facades\DB;
-
-// use PDF;
+use Carbon\Carbon;
 
 class PanganController extends Controller
 {
     public function index()
     {
-        return view('pangan.index', [
-            'pangan' => Pangan::paginate(10),
-        ]);
-    }
+        // Misalkan $role diambil dari status user yang sedang login
+        $role = Auth::user()->status ? 1 : 0;
 
+        // Mengambil semua ternak, pangan, dan operasi pangan
+        $pangans = Pangan::all();
+        $operationPangan = TambahPangan::all();
+
+        // Mengambil data showpangans dengan relasinya
+        $showpangans = Showpangan::with(['pangan', 'tambahPangan'])->get();
+
+        // Menghitung hari sejak ternak terakhir dimulai
+        $ternak = Ternak::where('is_ongoing', 1)->orderByDesc('created_at')->first();
+        $daysSinceTernakStarted = $ternak ? Carbon::parse($ternak->created_at)->diffInDays() : 0;
+
+        // Counter untuk nomor urutan
+        $counter = 1;
+
+        // Return data or redirect as needed
+        return view('pangan.index', compact('role', 'pangans', 'showpangans', 'daysSinceTernakStarted', 'counter'));
+    }
     public function add()
     {
         return view('pangan.input_pangan');
@@ -46,6 +61,7 @@ class PanganController extends Controller
 
             $tambahPangan = new TambahPangan();
             $tambahPangan->stok_masuk = $request->input('tambah_pangan');
+            $tambahPangan->stok_keluar = 0;
             $tambahPangan->stok_id = $latestPangan->id;
             $tambahPangan->id_ternak = $takeId_ternak ? $takeId_ternak->id : null;
             $tambahPangan->updated_by = Auth::user()->id;
@@ -68,12 +84,8 @@ class PanganController extends Controller
 
         try {
             // Ambil ternak tertentu jika id_ternak disediakan
-            $ternakId = $request->input('id_ternak');
-            $ongoingTernak = Ternak::where('is_ongoing', 1)
-                ->when($ternakId, function ($query, $ternakId) {
-                    return $query->where('id', $ternakId);
-                })
-                ->first();
+            // $ternakId = $request->input('id_ternak'); 
+            $ongoingTernak = Ternak::where('is_ongoing', 1)->first();
 
             // Cek apakah ada ternak yang sedang berlangsung
             if (!$ongoingTernak) {
@@ -82,9 +94,11 @@ class PanganController extends Controller
 
             $latestPangan = Pangan::latest('updated_at')->first();
 
-            $kurangPangan = new KurangPangan();
+            $kurangPangan = new TambahPangan();
+            $kurangPangan->stok_masuk = 0;
             $kurangPangan->stok_keluar = $request->input('keluar_pangan');
             $kurangPangan->stok_id = $latestPangan->id;
+            $kurangPangan->id_ternak = $ongoingTernak->id;
             $kurangPangan->updated_by = Auth::user()->id;
 
             // dd($kurangPangan);

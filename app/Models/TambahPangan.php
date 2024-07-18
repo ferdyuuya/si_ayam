@@ -9,10 +9,11 @@ class TambahPangan extends Model
 {
     use HasFactory;
 
-    protected $table = 'tambah_pangan';
+    protected $table = 'operation_pangan';
 
     protected $fillable = [
         'stok_masuk',
+        'stok_keluar',
         'stok_id',
         'id_ternak',
         'updated_by',
@@ -23,5 +24,9 @@ class TambahPangan extends Model
     public function ternak()
     {
         return $this->belongsTo(Ternak::class, 'id_ternak'); // Define the relationship if necessary
+    }
+    public function showpangans()
+    {
+        return $this->hasMany(Showpangan::class, 'id_operation_pangan');
     }
 }

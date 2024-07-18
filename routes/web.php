@@ -20,9 +20,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Pangan
 Route::get('/pangan', [PanganController::class, 'index'])->middleware('auth')->name('pangan');
-Route::get('/input_pangan', [PanganController::class, 'add'])->middleware('auth')->name('pangan.add');
-Route::post('/input_pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
-Route::post('/input_pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
+// Route::get('/input_pangan', [PanganController::class, 'add'])->middleware('auth')->name('pangan.add');
+Route::post('/pangan/addStok', [PanganController::class, 'addStok'])->middleware('auth')->name('pangan.addStok');
+Route::post('/pangan/subtractStock', [PanganController::class, 'subtractStok'])->middleware('auth')->name('pangan.subtractStok');
 // Route::get('/pangan/export', [PanganController::class, 'exportExcel'])->middleware('auth')->name('pangan.exportExcel');
 Route::get('/pangan/exportpdf', [PanganController::class, 'exportToPdf'])->middleware('auth')->name('pangan.exportToPdf');
 
@@ -37,7 +37,7 @@ Route::get('/ternak/exportpdf', [TernakController::class, 'exportToPdf'])->middl
 Route::get('/profile', [RegisterController::class, 'index'])->name('profile');
 Route::get('/userlist', [RegisterController::class, 'userList'])->name('profile.userlist');
 Route::post('/profile', [RegisterController::class, 'storeUser'])->name('profile.store');
-Route::get('/profile/{id}', [RegisterController::class, 'indexEdit'])->name('profile.edit'); 
+Route::get('/profile/{id}', [RegisterController::class, 'indexEdit'])->name('profile.edit');
 Route::post('/profile/{id}', [RegisterController::class, 'editUser'])->name('profile.postedit');
 Route::delete('/profile/{id}', [RegisterController::class, 'deleteUser'])->name('profile.delete');
 Route::get('/changepassword/{id}', [RegisterController::class, 'changePassword'])->name('profile.changepassword');
