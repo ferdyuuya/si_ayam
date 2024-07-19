@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Ternak;
 use App\Models\Pangan;
+use App\Models\TambahPangan;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory;
 
@@ -32,6 +33,23 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('1234'),
             'status' => true
         ]);
+
+        Pangan::create([
+            'stok_sekarang' => 0,
+            'updated_by' => 1,
+        ]);
+        TambahPangan::create([
+            'stok_id' => 1,
+            'updated_by' => 1,
+        ]);
+        // Ternak::create([
+        //     'ayam_mati' => 0,
+        //     'ayam_sakit' => 0,
+        //     'ayam_berhasil' => 0,
+        //     'total_ayam' => 0,
+        //     'total_awal_ayam' => 0,
+        //     'is_ongoing' => 0,
+        // ]);
 
         $faker = Factory::create();
 

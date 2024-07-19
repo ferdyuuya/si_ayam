@@ -42,52 +42,15 @@
           <i class="nav-icon fas fa-th"></i>
           <p>
             Pangan
-            {{-- <i class="right fas fa-angle-left"></i> --}}
           </p>
         </a>
-        <!-- Dropdown Menu Pangan -->
-        {{-- <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('pangan') }}" class="nav-link active">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Laporan Pangan</p>
-            </a>
-          </li>
-        </ul>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('pangan.add') }}" class="nav-link active">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Input Pangan</p>
-            </a>
-          </li>
-        </ul>
-      </li> --}}
       <li class="nav-item {{ request()->is('ternak') ? 'menu-open' : '' }}">
         <a href="{{ route('ternak') }}" class="nav-link {{ request()->is('ternak') ? 'active' : '' }}">
           <i class="nav-icon fas fa-th"></i>
           <p>
             Ternak
-            {{-- <i class="right fas fa-angle-left"></i> --}}
           </p>
         </a>
-        <!-- Dropdown Menu Ternak -->
-        {{-- <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('ternak') }}" class="nav-link active">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Laporan Ternak</p>
-            </a>
-          </li>
-        </ul>
-        <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ route('ternak.add') }}" class="nav-link active">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Input Ternak</p>
-            </a>
-          </li>
-        </ul> --}}
       </li>
       <li class="nav-item">
         <a href="{{ route('profile.userlist') }}" class="nav-link">

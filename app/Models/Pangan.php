@@ -10,14 +10,19 @@ class Pangan extends Model
     use HasFactory;
     protected $table = 'pangan';
     protected $fillable = [
-        'pengeluaran_stok',
-        'stok_sekarang',
-        'pemasukan_stok',
-        'update_pangan',
-        'updated_by'
+        'stok_sekarang'
     ];
     public function ternak()
     {
         return $this->belongsTo(Ternak::class, 'id_ternak'); // Assuming 'id_ternak' is the foreign key in the Pangan table
+    }
+
+    public function operasi()
+    {
+        return $this->hasMany(TambahPangan::class, 'id_operasi');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

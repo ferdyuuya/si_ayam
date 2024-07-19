@@ -119,11 +119,11 @@
               <label for="ayam_sakit">Ayam Sakit:</label>
               <input type="number" id="ayam_sakit" name="ayam_sakit" placeholder="0" min="0" required class="form-control">
             </div>
-
+{{-- 
             <div class="mb-3">
               <label for="ayam_berhasil">Ayam Berhasil:</label>
               <input type="number" id="ayam_berhasil" name="ayam_berhasil" placeholder="0" min="0" required class="form-control">
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-success">Selesaikan Ternak</button>
           </form>

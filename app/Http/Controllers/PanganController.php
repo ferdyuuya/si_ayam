@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pangan;
 use App\Models\Ternak;
+use App\Models\TambahPangan;
+use App\Models\Showpangan;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -11,15 +13,41 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Export\PanganExport;
-// use PDF;
+use App\Models\KurangPangan;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class PanganController extends Controller
 {
     public function index()
     {
-        return view('pangan.index', [
-            'pangan' => Pangan::paginate(10),
-        ]);
+        // Determine user role based on their status
+    $role = Auth::user()->status ? 1 : 0;
+
+    // Retrieve all records from Pangan and TambahPangan
+    $pangans = Pangan::all();
+
+    
+    $ternak = Ternak::where('is_ongoing', 1)->orderByDesc('created_at')->first();
+    $daysSinceTernakStarted = $ternak ? Carbon::parse($ternak->created_at)->diffInDays() : 0;
+
+    $pangansData = TambahPangan::with('user','stok','ternak')->get();
+
+    // $pangansData = DB::table('operation_pangan as p')
+    //     ->leftJoin('pangan as pa', 'pa.id_ternak', '=', 'p.id_ternak')
+    //     ->leftJoin('ternak as t', 't.id', '=', 'pa.id_ternak')
+    //     ->leftJoin('users as u', 'u.id', '=', 'p.updated_by')
+    //     ->select('p.created_at', 'p.stok_masuk', 'p.stok_keluar', 'pa.stok_sekarang', 't.is_ongoing', 'u.name')
+    //     ->where(function ($query) {
+    //         $query->where('t.is_ongoing', '=', 1)
+    //               ->orWhereNull('t.is_ongoing');
+    //     })
+    //     ->get();
+
+    // Return the view with all necessary data
+    // dd($pangansData);
+    return view('pangan.index', compact('role', 'pangans', 'daysSinceTernakStarted', 'pangansData'));
     }
 
     public function add()
@@ -29,74 +57,84 @@ class PanganController extends Controller
 
     public function addStok(Request $request)
     {
-        $validatedData = $request->validate(['pemasukan_stok' => 'required|integer|min:0']);
-
         if (Auth::user()->status != 0) { // 0 means false == not pengurus
             return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan stok.');
         }
+        $request->validate(['tambah_pangan' => 'required|integer|min:0']);
+        try {
+            $latestPangan = Pangan::latest('updated_at')->first();
+            $takeId_ternak = Ternak::where('is_ongoing', 1)->first();
+            if (!$latestPangan) {
+                return redirect()->back()->with('error', 'No Pangan record found.');
+            }
 
-        $latestPangan = Pangan::latest('update_pangan')->first();
-        $pangan = new Pangan();
-        $pangan->pemasukan_stok = $request->pemasukan_stok;
+            $tambahPangan = new TambahPangan();
+            $tambahPangan->stok_masuk = $request->input('tambah_pangan');
+            $tambahPangan->stok_keluar = 0;
+            $tambahPangan->stok_id = $latestPangan->id;
+            $tambahPangan->id_ternak = $takeId_ternak ? $takeId_ternak->id : null;
+            $tambahPangan->updated_by = Auth::user()->id;
 
-        // Jika tidak ada stok sebelumnya, maka stok sekarang adalah stok yang dimasukkan
-        if ($latestPangan) {
-            $pangan->stok_sekarang = $latestPangan->stok_sekarang + $request->pemasukan_stok;
-        } else {
-            $pangan->stok_sekarang = $request->pemasukan_stok;
+            // dd($tambahPangan);
+            $tambahPangan->save();
+
+            return redirect()->back()->with('success', 'Stok pangan berhasil ditambahkan.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan stok.');
         }
-
-        $pangan->id_ternak = $request->has('id_ternak') ? $request->input('id_ternak') : null;
-
-        $pangan->update_pangan = now();
-        $pangan->updated_by = auth()->user()->name;
-        $pangan->save();
-
-        return redirect()->back()->with('success', 'Stok pangan berhasil ditambahkan.');
     }
+
 
     public function subtractStok(Request $request)
     {
-        $validatedData = $request->validate([
-            'pengeluaran_stok' => 'required|integer|min:0'
-        ]);
+        $request->validate(['keluar_pangan' => 'required|integer|min:0']);
 
         try {
             // Ambil ternak tertentu jika id_ternak disediakan
-            $ternakId = $request->input('id_ternak');
-            $ongoingTernak = Ternak::where('is_ongoing', 1)
-                ->when($ternakId, function ($query, $ternakId) {
-                    return $query->where('id', $ternakId);
-                })
-                ->first();
+            // $ternakId = $request->input('id_ternak'); 
+            $ongoingTernak = Ternak::where('is_ongoing', 1)->first();
 
             // Cek apakah ada ternak yang sedang berlangsung
             if (!$ongoingTernak) {
                 return redirect()->back()->with('error', 'Tidak ada ternak yang sedang berlangsung. Stok tidak bisa dikurangi.');
             }
 
-            // Ambil stok terbaru dari catatan terakhir
-            $latestPangan = Pangan::latest('update_pangan')->first();
-            $currentStock = $latestPangan ? $latestPangan->stok_sekarang : 0;
+            $latestPangan = Pangan::latest('updated_at')->first();
 
-            // Buat record Pangan baru
-            $pangan = new Pangan();
-            $pangan->pengeluaran_stok = $validatedData['pengeluaran_stok'];
-            $pangan->stok_sekarang = $currentStock - $validatedData['pengeluaran_stok'];
+            $kurangPangan = new TambahPangan();
+            $kurangPangan->stok_masuk = 0;
+            $kurangPangan->stok_keluar = $request->input('keluar_pangan');
+            $kurangPangan->stok_id = $latestPangan->id;
+            $kurangPangan->id_ternak = $ongoingTernak->id;
+            $kurangPangan->updated_by = Auth::user()->id;
 
-            // Tetapkan atribut lain
-            $pangan->id_ternak = $ongoingTernak->id;
-            $pangan->update_pangan = now();
-            $pangan->updated_by = Auth::user()->name;
+            // dd($kurangPangan);
+            $kurangPangan->save();
 
-            // Simpan record Pangan baru
-            $pangan->save();
-
-            return redirect()->back()->with('success', 'Stok pangan berhasil dikurangi.');
+            return redirect()->back()->with('success', 'Stok pangan berhasil ditambahkan.');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengurangi stok.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan stok.');
         }
     }
+
+    // public function showPangan()
+    // {
+    //     $pangans = DB::table('operation_pangan as p')
+    //     ->leftJoin('pangan as pa', 'pa.id_ternak', '=', 'p.id_ternak')
+    //     ->leftJoin('ternak as t', 't.id', '=', 'pa.id_ternak')
+    //     ->leftJoin('users as u', 'u.id', '=', 'p.updated_by')
+    //     ->select('p.created_at', 'p.stok_masuk', 'p.stok_keluar', 'pa.stok_sekarang', 't.is_ongoing', 'u.name')
+    //     ->where(function($query) {
+    //         $query->where('t.is_ongoing', '=', 1)
+    //               ->orWhereNull('t.is_ongoing');
+    //     })
+    //     ->get();
+
+    //     dd($pangans); // Check the retrieved data
+        
+    //     // return view('pangan.index', compact('pangans'));
+    // }
+
 
     public function exportToPdf()
     {

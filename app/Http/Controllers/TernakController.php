@@ -44,19 +44,15 @@ class TernakController extends Controller
         $validatedData = $request->validate([
             'ayam_mati' => 'required|integer|min:0',
             'ayam_sakit' => 'required|integer|min:0',
-            'ayam_berhasil' => 'required|integer|min:0',
         ]);
 
         $ternak = Ternak::findOrFail($id); // Use findOrFail for automatic 404 if not found
-
+        $totalAyam = $ternak->total_awal_ayam;
         if ($ternak->is_ongoing) {
             $ternak->fill($validatedData);
 
-            // Calculate total_ayam
-            $ternak->total_ayam = $ternak->ayam_mati + $ternak->ayam_sakit + $ternak->ayam_berhasil;
-
-            // Calculate total_awal_ayam
-            // $ternak->total_awal_ayam = $ternak->total_awal_ayam - $ternak->total_ayam;
+            $ternak->ayam_berhasil = $totalAyam - ($request->ayam_mati + $request->ayam_sakit);
+            $ternak->total_ayam = $ternak->total_awal_ayam;
 
             $ternak->is_ongoing = false;
 
@@ -71,7 +67,7 @@ class TernakController extends Controller
     public function exportToPdf()
     {
         $ternak = Ternak::all();
-        $pdf = PDF::loadView('ternak.export_pdf', compact('ternak')); 
+        $pdf = PDF::loadView('ternak.export_pdf', compact('ternak'));
         return $pdf->download('ternak.pdf');
     }
 }
