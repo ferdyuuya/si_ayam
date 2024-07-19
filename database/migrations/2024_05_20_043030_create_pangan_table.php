@@ -17,7 +17,7 @@ class CreatePanganTable extends Migration
         Schema::create('pangan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_ternak')->nullable();
-            // $table->unsignedBigInteger('id_operasi')->nullable();
+            $table->unsignedBigInteger('id_operasi')->nullable();
             $table->integer('stok_sekarang')->unsigned();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('updated_by')->references('id')->on('users');

@@ -17,8 +17,12 @@ class Pangan extends Model
         return $this->belongsTo(Ternak::class, 'id_ternak'); // Assuming 'id_ternak' is the foreign key in the Pangan table
     }
 
-    public function showpangans()
+    public function operasi()
     {
-        return $this->hasMany(Showpangan::class, 'id_pangan');
+        return $this->hasMany(TambahPangan::class, 'id_operasi');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

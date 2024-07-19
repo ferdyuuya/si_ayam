@@ -48,7 +48,10 @@
           <div class="small-box bg-warning">
             <div class="inner">
               <h3>Status Ternak</h3>
-              {{-- <h3>{{ $latestOngoingTernak ? ($latestOngoingTernak->is_ongoing ? 'Sedang Berlangsung' : 'Tidak Berlangsung') : 'Tidak Berlangsung' }}</h3> --}}
+              @php
+                $latestOngoingTernak = $pangans->sortByDesc('created_at')->first();
+              @endphp
+              <h3>{{ $latestOngoingTernak ? ($latestOngoingTernak->is_ongoing ? 'Sedang Berlangsung' : 'Tidak Berlangsung') : 'Tidak Berlangsung' }}</h3>
               <p>Lorem ipsum</p>
             </div>
           </div>
@@ -70,25 +73,25 @@
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
-                  <th>Stok Pangan</th>
+                  <th>Stok Pangan Masuk</th>
                   <th>Stok Pangan Keluar</th>
-                  <th>Stok Sekarang</th>
-                  <th>Ternak yang sedang berlangsung</th>
+                  <th>Stok Sebelumnya</th>
+                  <th>Status Ternak</th>
                   <th>Diupdate oleh</th>
                 </tr>
               </thead>
-              <tbody>
-                @foreach ($showpangans as $tampil)
-                  @if ($tampil->pangan && $tampil->operation_pangan)
-                    <tr>
-                      <td>{{ $loop->iteration }}</td>
-                      <td>{{ $tampil->pangan->created_at }}</td>
-                      <td>{{ $tampil->operation_pangan->stok_masuk }}</td>
-                      <td>{{ $tampil->operation_pangan->stok_keluar }}</td>
-                      <td>{{ $tampil->pangan->stok_sekarang }}</td>
-                      <td>{{ $tampil->pangan->id_ternak }}</td>
-                      <td>{{ $tampil->pangan->updated_by }}</td>
-                    </tr>
+                <tbody>
+                @foreach ($pangansData as $key => $pangans)
+                  @if ($key > 0)
+                  <tr>
+                    <td>{{ $key }}</td>
+                    <td>{{ $pangans->created_at }}</td>
+                    <td>{{ $pangans->stok_masuk ?? 'N/A' }}</td>
+                    <td>{{ $pangans->stok_keluar ?? 'N/A' }}</td>
+                    <td>{{ $pangans->stok->stok_sekarang ?? 'N/A' }}</td>
+                    <td>{{ $pangans->is_ongoing ? 'Sedang Berlangsung' : 'Tidak Berlangsung' }}</td>
+                    <td>{{ $pangans->user->name ?? 'N/A' }}</td>
+                  </tr>
                   @endif
                 @endforeach
               </tbody>

@@ -42,6 +42,14 @@ class DatabaseSeeder extends Seeder
             'stok_id' => 1,
             'updated_by' => 1,
         ]);
+        // Ternak::create([
+        //     'ayam_mati' => 0,
+        //     'ayam_sakit' => 0,
+        //     'ayam_berhasil' => 0,
+        //     'total_ayam' => 0,
+        //     'total_awal_ayam' => 0,
+        //     'is_ongoing' => 0,
+        // ]);
 
         $faker = Factory::create();
 

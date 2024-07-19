@@ -25,8 +25,12 @@ class TambahPangan extends Model
     {
         return $this->belongsTo(Ternak::class, 'id_ternak'); // Define the relationship if necessary
     }
-    public function showpangans()
+    public function stok()
     {
-        return $this->hasMany(Showpangan::class, 'id_operation_pangan');
+        return $this->belongsTo(Pangan::class, 'stok_id'); // Define the relationship if necessary
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

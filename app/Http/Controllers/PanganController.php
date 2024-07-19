@@ -17,32 +17,39 @@ use App\Models\KurangPangan;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+
 class PanganController extends Controller
 {
     public function index()
     {
-        // Misalkan $role diambil dari status user yang sedang login
-        $role = Auth::user()->status ? 1 : 0;
+        // Determine user role based on their status
+    $role = Auth::user()->status ? 1 : 0;
 
-        // Mengambil semua ternak, pangan, dan operasi pangan
-        $pangans = Pangan::all();
-        $operationPangan = TambahPangan::all();
+    // Retrieve all records from Pangan and TambahPangan
+    $pangans = Pangan::all();
 
-        // Mengambil data showpangans dengan relasinya
-        $showpangans = Showpangan::with(['pangan', 'tambahPangan'])->get();
+    
+    $ternak = Ternak::where('is_ongoing', 1)->orderByDesc('created_at')->first();
+    $daysSinceTernakStarted = $ternak ? Carbon::parse($ternak->created_at)->diffInDays() : 0;
 
-        // Menghitung hari sejak ternak terakhir dimulai
-        $ternak = Ternak::where('is_ongoing', 1)->orderByDesc('created_at')->first();
-        $daysSinceTernakStarted = $ternak ? Carbon::parse($ternak->created_at)->diffInDays() : 0;
+    $pangansData = TambahPangan::with('user','stok','ternak')->get();
 
-        // Counter untuk nomor urutan
-        $counter = 1;
+    // $pangansData = DB::table('operation_pangan as p')
+    //     ->leftJoin('pangan as pa', 'pa.id_ternak', '=', 'p.id_ternak')
+    //     ->leftJoin('ternak as t', 't.id', '=', 'pa.id_ternak')
+    //     ->leftJoin('users as u', 'u.id', '=', 'p.updated_by')
+    //     ->select('p.created_at', 'p.stok_masuk', 'p.stok_keluar', 'pa.stok_sekarang', 't.is_ongoing', 'u.name')
+    //     ->where(function ($query) {
+    //         $query->where('t.is_ongoing', '=', 1)
+    //               ->orWhereNull('t.is_ongoing');
+    //     })
+    //     ->get();
 
-
-
-        // Return data or redirect as needed
-        return view('pangan.index', compact('role', 'pangans', 'showpangans', 'daysSinceTernakStarted', 'counter'));
+    // Return the view with all necessary data
+    // dd($pangansData);
+    return view('pangan.index', compact('role', 'pangans', 'daysSinceTernakStarted', 'pangansData'));
     }
+
     public function add()
     {
         return view('pangan.input_pangan');
@@ -78,8 +85,6 @@ class PanganController extends Controller
     }
 
 
-
-
     public function subtractStok(Request $request)
     {
         $request->validate(['keluar_pangan' => 'required|integer|min:0']);
@@ -112,7 +117,23 @@ class PanganController extends Controller
         }
     }
 
+    // public function showPangan()
+    // {
+    //     $pangans = DB::table('operation_pangan as p')
+    //     ->leftJoin('pangan as pa', 'pa.id_ternak', '=', 'p.id_ternak')
+    //     ->leftJoin('ternak as t', 't.id', '=', 'pa.id_ternak')
+    //     ->leftJoin('users as u', 'u.id', '=', 'p.updated_by')
+    //     ->select('p.created_at', 'p.stok_masuk', 'p.stok_keluar', 'pa.stok_sekarang', 't.is_ongoing', 'u.name')
+    //     ->where(function($query) {
+    //         $query->where('t.is_ongoing', '=', 1)
+    //               ->orWhereNull('t.is_ongoing');
+    //     })
+    //     ->get();
 
+    //     dd($pangans); // Check the retrieved data
+        
+    //     // return view('pangan.index', compact('pangans'));
+    // }
 
 
     public function exportToPdf()
