@@ -54,7 +54,7 @@
             <div class="inner">
               @if($latestOngoingTernak)
                 <h3>Ternak dimulai</h3>
-                <h3>{{ $ternak->sortByDesc('created_at')->first()->created_at->format('Y-m-d') }}</h3>
+                <h3>{{ $ternak->sortByDesc('created_at')->first()->created_at->format('d-m-Y') }}</h3>
                 <p>Tanggal Ternak dimulai</p>
               @else
                 <h4>No data available</h4>
@@ -82,10 +82,10 @@
             @if ($ongoingTernak)
               <button id="endTernak" class="btn btn-danger w-100 mb-2" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #dd3131; color: white; margin-bottom: 10px;">Selesaikan ternak</button>
             @else
-              <button id="startTernak" class="btn btn-primary" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #50B498; color: white; margin-bottom: 10px;">Mulai Ternak</button>
+              <button id="startTernak" class="btn btn-danger w-100 mb-2" style="background-color: #3ce24c; color: white;">Mulai Ternak</button>
             @endif
           @endif
-          <a href="{{ route('ternak.exportToPdf') }}" class="btn btn-primary" style="width: 200px; height: 50%; display: flex; align-items: center; justify-content: center; background-color: #3ce045; color: white; margin-bottom: 10px;">Export PDF</a>
+          <a href="{{ route('ternak.exportToPdf') }}" class="btn btn-danger w-100 mb-2" style="background-color: #50B498; color: white;">Export PDF</a>
         </div>
       </div>
 
@@ -95,9 +95,9 @@
           <h2>Mulai Ternak</h2>
           <form action="{{ route('ternak.store') }}" method="POST">
             @csrf
-            <label for="total_awal_ayam">Jumlah pangan</label>
-            <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="60kg" class="form-control mb-2">
-            <button type="submit" class="btn btn-primary">Tambahkan Pangan</button>
+            <label for="total_awal_ayam">Jumlah Ayam</label>
+            <input type="text" id="total_awal_ayam" name="total_awal_ayam" placeholder="1000 Ekor" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Tambahkan</button>
           </form>
         </div>
       </div>
@@ -139,7 +139,7 @@
                   <th>No</th>
                   <th>Ayam Mati</th>
                   <th>Ayam Sakit</th>
-                  <th>Ayam Berhasil</th>
+                  <th>Ayam Berhasil Ternak</th>
                   <th>Total Ayam</th>
                   <th>Total Awal Ayam</th>
                   <th>Status</th>

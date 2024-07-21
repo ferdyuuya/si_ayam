@@ -32,6 +32,9 @@
               <h3>Hari</h3>
               <h3>{{ floor($daysSinceTernakStarted) }}</h3>
               <p>Setelah Ternak dimulai</p>
+              <div class="icon">
+                <i class="ion ion-calendar"></i>
+              </div>
             </div>
           </div>
         </div>
@@ -52,7 +55,7 @@
                 $latestOngoingTernak = $pangans->sortByDesc('created_at')->first();
               @endphp
               <h3>{{ $latestOngoingTernak ? ($latestOngoingTernak->is_ongoing ? 'Sedang Berlangsung' : 'Tidak Berlangsung') : 'Tidak Berlangsung' }}</h3>
-              <p>Lorem ipsum</p>
+              <p>Keadaan Ternak</p>
             </div>
           </div>
         </div>
@@ -73,9 +76,9 @@
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
-                  <th>Stok Pangan Masuk</th>
-                  <th>Stok Pangan Keluar</th>
-                  <th>Stok Sebelumnya</th>
+                  <th>Stok Pangan Masuk (Kg)</th>
+                  <th>Stok Pangan Keluar (Kg)</th>
+                  <th>Stok Sebelumnya (Kg)</th>
                   <th>Status Ternak</th>
                   <th>Diupdate oleh</th>
                 </tr>

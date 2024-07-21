@@ -1,17 +1,17 @@
-<div class="sidebar">
+<div class="sidebar" style="background-color: black">
   <!-- Sidebar user panel (optional) -->
   {{-- <div class="user-panel mt-3 pb-3 mb-3" style="background-color: #2c3e50; padding: 10px; border-radius: 5px; color: #ecf0f1;"> --}}
     <div class="info" style="margin-bottom: 5px;">
     @php
     $user = Auth::user();
     @endphp
-      <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Log as : {{$user->name }}</a>
+      <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;"></a>
     </div>
     <div class="info">
       @if($user->status == 0)
-        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Admin</a>
+        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;"></a>
       @else
-        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;">Role : Pengurus</a>
+        <a href="#" class="d-block" style="color: #ecf0f1; text-decoration: none; font-weight: bold;"></a>
       @endif
     </div>
   {{-- </div> --}}
@@ -29,14 +29,14 @@
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="/" class="nav-link">
           <i class="nav-icon fas fa-th"></i>
           <p>
             Dashboard
           </p>
         </a>
-      </li>
+      </li> --}}
       <li class="nav-item {{ request()->is('pangan') ? 'menu-open' : '' }}">
         <a href="{{ route('pangan') }}" class="nav-link {{ request()->is('pangan') ? 'active' : '' }}">
           <i class="nav-icon fas fa-th"></i>
